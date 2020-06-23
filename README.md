@@ -12,8 +12,7 @@ This is an easy to implement package for adding Focused Long Press Menu to Flutt
 
 ## Usage
 To Use, simply Wrap the Widget you want to add Focused Menu to, with FocusedMenuHolder:
-
-```dart
+```
               Expanded(
                 child: GridView(
                   physics: BouncingScrollPhysics(),
