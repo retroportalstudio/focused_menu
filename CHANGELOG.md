@@ -5,4 +5,5 @@
 
 ## [1.0.1] - June 24,2020
 
-* Minor Bug Fixes
+* Added Customizable offset of Menu from Selected Item
+* Added BottomOffsetHeight for Screens with Bottom Navigation Bar
