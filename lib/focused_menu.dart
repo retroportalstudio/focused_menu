@@ -15,8 +15,10 @@ class FocusedMenuHolder extends StatefulWidget {
   final Duration duration;
   final double blurSize;
   final Color blurBackgroundColor;
+  final double bottomOffsetHeight;
+  final double menuOffset;
 
-  const FocusedMenuHolder({Key key, @required this.child, @required this.onPressed, @required this.menuItems, this.duration, this.menuBoxDecoration, this.menuItemExtent, this.animateMenuItems,this.blurSize,this.blurBackgroundColor,this.menuWidth})
+  const FocusedMenuHolder({Key key, @required this.child, @required this.onPressed, @required this.menuItems, this.duration, this.menuBoxDecoration, this.menuItemExtent, this.animateMenuItems,this.blurSize,this.blurBackgroundColor,this.menuWidth, this.bottomOffsetHeight, this.menuOffset})
       : super(key: key);
 
   @override
@@ -64,6 +66,8 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                           menuWidth:widget.menuWidth,
                           blurBackgroundColor: widget.blurBackgroundColor,
                           animateMenu: widget.animateMenuItems ?? true,
+                          bottomOffsetHeight:widget.bottomOffsetHeight ?? 0,
+                          menuOffset: widget.menuOffset ?? 0,
                         ));
                   },
                   fullscreenDialog: true,
@@ -84,9 +88,11 @@ class FocusedMenuDetails extends StatelessWidget {
   final double blurSize;
   final double menuWidth;
   final Color blurBackgroundColor;
+  final double bottomOffsetHeight;
+  final double menuOffset;
 
   const FocusedMenuDetails(
-      {Key key, @required this.menuItems, @required this.child, @required this.childOffset, @required this.childSize,@required this.menuBoxDecoration, @required this.itemExtent,@required this.animateMenu,@required this.blurSize,@required this.blurBackgroundColor,@required this.menuWidth})
+      {Key key, @required this.menuItems, @required this.child, @required this.childOffset, @required this.childSize,@required this.menuBoxDecoration, @required this.itemExtent,@required this.animateMenu,@required this.blurSize,@required this.blurBackgroundColor,@required this.menuWidth, this.bottomOffsetHeight, this.menuOffset})
       : super(key: key);
 
   @override
@@ -99,7 +105,7 @@ class FocusedMenuDetails extends StatelessWidget {
     final maxMenuWidth = menuWidth??(size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
     final leftOffset = (childOffset.dx+maxMenuWidth ) < size.width ? childOffset.dx: (childOffset.dx-maxMenuWidth+childSize.width);
-    final topOffset = (childOffset.dy + menuHeight + childSize.height) < size.height ? childOffset.dy + childSize.height : childOffset.dy - menuHeight;
+    final topOffset = (childOffset.dy + menuHeight + childSize.height) < size.height - bottomOffsetHeight ? childOffset.dy + childSize.height + menuOffset : childOffset.dy - menuHeight - menuOffset;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
