@@ -17,8 +17,24 @@ class FocusedMenuHolder extends StatefulWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
+  /// Open with tap insted of long press.
+  final bool openWithTap;
 
-  const FocusedMenuHolder({Key key, @required this.child, @required this.onPressed, @required this.menuItems, this.duration, this.menuBoxDecoration, this.menuItemExtent, this.animateMenuItems,this.blurSize,this.blurBackgroundColor,this.menuWidth, this.bottomOffsetHeight, this.menuOffset})
+  const FocusedMenuHolder(
+      {Key key,
+      @required this.child,
+      @required this.onPressed,
+      @required this.menuItems,
+      this.duration,
+      this.menuBoxDecoration,
+      this.menuItemExtent,
+      this.animateMenuItems,
+      this.blurSize,
+      this.blurBackgroundColor,
+      this.menuWidth,
+      this.bottomOffsetHeight,
+      this.menuOffset,
+      this.openWithTap = false})
       : super(key: key);
 
   @override
@@ -44,36 +60,47 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
   Widget build(BuildContext context) {
     return GestureDetector(
         key: containerKey,
-        onTap: widget.onPressed,
-        onLongPress: () async {
-          getOffset();
-          await Navigator.push(
-              context,
-              PageRouteBuilder(
-                  transitionDuration: widget.duration ?? Duration(milliseconds: 100),
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    animation = Tween(begin: 0.0, end: 1.0).animate(animation);
-                    return FadeTransition(
-                        opacity: animation,
-                        child: FocusedMenuDetails(
-                          itemExtent: widget.menuItemExtent,
-                          menuBoxDecoration: widget.menuBoxDecoration,
-                          child: widget.child,
-                          childOffset: childOffset,
-                          childSize: childSize,
-                          menuItems: widget.menuItems,
-                          blurSize:widget.blurSize,
-                          menuWidth:widget.menuWidth,
-                          blurBackgroundColor: widget.blurBackgroundColor,
-                          animateMenu: widget.animateMenuItems ?? true,
-                          bottomOffsetHeight:widget.bottomOffsetHeight ?? 0,
-                          menuOffset: widget.menuOffset ?? 0,
-                        ));
-                  },
-                  fullscreenDialog: true,
-                  opaque: false));
+        onTap: () async {
+          widget.onPressed();
+          if (widget.openWithTap) {
+            await openMenu(context);
+          }
         },
-        child:  widget.child);
+        onLongPress: () async {
+          if (!widget.openWithTap) {
+            await openMenu(context);
+          }
+        },
+        child: widget.child);
+  }
+
+  Future openMenu(BuildContext context) async {
+    getOffset();
+    await Navigator.push(
+        context,
+        PageRouteBuilder(
+            transitionDuration: widget.duration ?? Duration(milliseconds: 100),
+            pageBuilder: (context, animation, secondaryAnimation) {
+              animation = Tween(begin: 0.0, end: 1.0).animate(animation);
+              return FadeTransition(
+                  opacity: animation,
+                  child: FocusedMenuDetails(
+                    itemExtent: widget.menuItemExtent,
+                    menuBoxDecoration: widget.menuBoxDecoration,
+                    child: widget.child,
+                    childOffset: childOffset,
+                    childSize: childSize,
+                    menuItems: widget.menuItems,
+                    blurSize: widget.blurSize,
+                    menuWidth: widget.menuWidth,
+                    blurBackgroundColor: widget.blurBackgroundColor,
+                    animateMenu: widget.animateMenuItems ?? true,
+                    bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
+                    menuOffset: widget.menuOffset ?? 0,
+                  ));
+            },
+            fullscreenDialog: true,
+            opaque: false));
   }
 }
 
