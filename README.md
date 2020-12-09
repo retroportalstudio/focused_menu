@@ -52,7 +52,11 @@ To Use, simply Wrap the Widget you want to add Focused Menu to, with FocusedMenu
                 ),
               ),
 ```
-
+To use the `FocusedMenuItem` widget, ensure that you have the modals library imported also:
+```dart
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
+```
 ## Roadmap
 Plans to add more customizations.
 
