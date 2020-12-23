@@ -77,15 +77,11 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
   }
 
   @override
-  void initState() {
+  Widget build(BuildContext context) {
     if (widget.controller != null) {
       widget.controller.addListener(openMenuHandler);
     }
-    super.initState();
-  }
 
-  @override
-  Widget build(BuildContext context) {
     Widget mainWidget = GestureDetector(
         key: containerKey,
         onTap: () async {
