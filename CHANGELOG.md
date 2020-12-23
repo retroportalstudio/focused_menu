@@ -7,3 +7,7 @@
 
 * Added Customizable offset of Menu from Selected Item
 * Added BottomOffsetHeight for Screens with Bottom Navigation Bar
+
+## [1.0.2] - December 23,2020
+
+* Added openWithTap: true|false to Open Focused Menu on Tap rather than a Long Press

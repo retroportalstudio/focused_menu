@@ -28,6 +28,7 @@ To Use, simply Wrap the Widget you want to add Focused Menu to, with FocusedMenu
                         duration: Duration(milliseconds: 100),
                         animateMenuItems: true,
                         blurBackgroundColor: Colors.black54,
+                        openWithTap: true, // Open Focused-Menu on Tap rather than Long Press
                         menuOffset: 10.0, // Offset value to show menuItem from the selected item
                         bottomOffsetHeight: 80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
                         menuItems: <FocusedMenuItem>[

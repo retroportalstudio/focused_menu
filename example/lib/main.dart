@@ -88,6 +88,7 @@ class MyHomePage extends StatelessWidget {
                         animateMenuItems: true,
                         blurBackgroundColor: Colors.black54,
                         bottomOffsetHeight: 100,
+                        openWithTap: true,
                         menuItems: <FocusedMenuItem>[
                           FocusedMenuItem(title: Text("Open"),trailingIcon: Icon(Icons.open_in_new) ,onPressed: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>ScreenTwo()));
