@@ -202,7 +202,7 @@ class FocusedMenuDetails extends StatelessWidget {
                                 spreadRadius: 1)
                           ]),
                   child: ClipRRect(
-                    borderRadius: listViewBorderRadius,
+                    borderRadius: listViewBorderRadius ?? const BorderRadius.all(Radius.circular(5.0)),
                     child:
                         NotificationListener<OverscrollIndicatorNotification>(
                       onNotification:
