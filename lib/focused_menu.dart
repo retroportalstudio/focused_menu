@@ -202,64 +202,56 @@ class FocusedMenuDetails extends StatelessWidget {
                                 spreadRadius: 1)
                           ]),
                   child: ClipRRect(
-                    borderRadius: listViewBorderRadius ?? const BorderRadius.all(Radius.circular(5.0)),
-                    child:
-                        NotificationListener<OverscrollIndicatorNotification>(
-                      onNotification:
-                          (OverscrollIndicatorNotification overscroll) {
-                        overscroll.disallowGlow();
-                      },
-                      child: ListView.builder(
-                        itemCount: menuItems.length,
-                        padding: EdgeInsets.zero,
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          FocusedMenuItem item = menuItems[index];
-                          Widget listItem = item == null
-                              ? Container()
-                              : GestureDetector(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    item.onPressed();
-                                  },
-                                  child: Container(
-                                      alignment: Alignment.center,
-                                      margin: const EdgeInsets.only(bottom: 1),
-                                      color:
-                                          item.backgroundColor ?? Colors.white,
-                                      height: itemExtent ?? 50.0,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8.0, horizontal: 14),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            item.title,
-                                            if (item.trailingIcon != null) ...[
-                                              item.trailingIcon
-                                            ]
-                                          ],
-                                        ),
-                                      )));
-                          if (animateMenu) {
-                            return TweenAnimationBuilder(
-                                builder: (context, value, child) {
-                                  return Transform(
-                                    transform:
-                                        Matrix4.rotationX(1.5708 * value),
-                                    alignment: Alignment.bottomCenter,
-                                    child: child,
-                                  );
+                    borderRadius: listViewBorderRadius ??
+                        const BorderRadius.all(Radius.circular(5.0)),
+                    child: ListView.builder(
+                      itemCount: menuItems.length,
+                      padding: EdgeInsets.zero,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        FocusedMenuItem item = menuItems[index];
+                        Widget listItem = item == null
+                            ? Container()
+                            : GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  item.onPressed();
                                 },
-                                tween: Tween(begin: 1.0, end: 0.0),
-                                duration: Duration(milliseconds: index * 200),
-                                child: listItem);
-                          } else {
-                            return listItem;
-                          }
-                        },
-                      ),
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    margin: const EdgeInsets.only(bottom: 1),
+                                    color: item.backgroundColor ?? Colors.white,
+                                    height: itemExtent ?? 50.0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0, horizontal: 14),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          item.title,
+                                          if (item.trailingIcon != null) ...[
+                                            item.trailingIcon
+                                          ]
+                                        ],
+                                      ),
+                                    )));
+                        if (animateMenu) {
+                          return TweenAnimationBuilder(
+                              builder: (context, value, child) {
+                                return Transform(
+                                  transform: Matrix4.rotationX(1.5708 * value),
+                                  alignment: Alignment.bottomCenter,
+                                  child: child,
+                                );
+                              },
+                              tween: Tween(begin: 1.0, end: 0.0),
+                              duration: Duration(milliseconds: index * 200),
+                              child: listItem);
+                        } else {
+                          return listItem;
+                        }
+                      },
                     ),
                   ),
                 ),
