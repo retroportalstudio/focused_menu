@@ -17,6 +17,7 @@ class FocusedMenuHolder extends StatefulWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
+  final BorderRadius listViewBorderRadius;
   /// Open with tap insted of long press.
   final bool openWithTap;
 
@@ -34,6 +35,7 @@ class FocusedMenuHolder extends StatefulWidget {
       this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
+      this.listViewBorderRadius,
       this.openWithTap = false})
       : super(key: key);
 
@@ -97,6 +99,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                     animateMenu: widget.animateMenuItems ?? true,
                     bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
                     menuOffset: widget.menuOffset ?? 0,
+                    listViewBorderRadius: widget.listViewBorderRadius,
                   ));
             },
             fullscreenDialog: true,
@@ -117,9 +120,10 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
+  final BorderRadius listViewBorderRadius;
 
   const FocusedMenuDetails(
-      {Key key, @required this.menuItems, @required this.child, @required this.childOffset, @required this.childSize,@required this.menuBoxDecoration, @required this.itemExtent,@required this.animateMenu,@required this.blurSize,@required this.blurBackgroundColor,@required this.menuWidth, this.bottomOffsetHeight, this.menuOffset})
+      {Key key, @required this.menuItems, @required this.child, @required this.childOffset, @required this.childSize,@required this.menuBoxDecoration, @required this.itemExtent,@required this.animateMenu,@required this.blurSize,@required this.blurBackgroundColor,@required this.menuWidth, this.bottomOffsetHeight, this.menuOffset, this.listViewBorderRadius})
       : super(key: key);
 
   @override
@@ -171,14 +175,14 @@ class FocusedMenuDetails extends StatelessWidget {
                           borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                           boxShadow: [const BoxShadow(color: Colors.black38, blurRadius: 10, spreadRadius: 1)]),
                   child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: listViewBorderRadius,
                     child: ListView.builder(
                       itemCount: menuItems.length,
                       padding: EdgeInsets.zero,
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         FocusedMenuItem item = menuItems[index];
-                        Widget listItem = GestureDetector(
+                        Widget listItem = item == null ? Container():GestureDetector(
                             onTap:
                                 () {
                               Navigator.pop(context);
