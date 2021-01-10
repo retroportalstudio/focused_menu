@@ -165,10 +165,11 @@ class FocusedMenuDetails extends StatelessWidget {
             size.height - bottomOffsetHeight
         ? childOffset.dy + childSize.height + menuOffset
         : childOffset.dy - menuHeight - menuOffset;*/
-    final bottomOffset = childOffset.dy >
+        var childpos =(size.height /2 + childOffset.dy);
+    final bottomOffset = childpos >
             (menuItems.where((element) => element != null).length *
                     (itemExtent ?? 50.0) + childSize.height)
-        ? childOffset.dy
+        ? childpos
         : 10.0;
     return Scaffold(
       backgroundColor: Colors.transparent,
