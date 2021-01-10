@@ -81,10 +81,10 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
     getOffset();
     double setmenuHeight = 0.0;
     widget.menuItems.forEach((element) {
-      if (element != null){
+      if (element != null) {
         setmenuHeight += widget.menuItemExtent ?? 50.0;
       }
-     });
+    });
     await Navigator.push(
         context,
         PageRouteBuilder(
@@ -165,7 +165,15 @@ class FocusedMenuDetails extends StatelessWidget {
             size.height - bottomOffsetHeight
         ? childOffset.dy + childSize.height + menuOffset
         : childOffset.dy - menuHeight - menuOffset;*/
-    final bottomOffset = childOffset.dy > (menuItems.where((element) => element != null).length * (itemExtent ?? 50.0) + childSize.height + 10)? childOffset.dy: (menuItems.where((element) => element != null).length * (itemExtent ?? 50.0) + childSize.height + 10)- childOffset.dy;
+    final bottomOffset = childOffset.dy >
+            (menuItems.where((element) => element != null).length *
+                    (itemExtent ?? 50.0) +
+                childSize.height)
+        ? childOffset.dy
+        : (menuItems.where((element) => element != null).length *
+                    (itemExtent ?? 50.0) +
+                childSize.height) -
+            childOffset.dy * 2;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -185,100 +193,103 @@ class FocusedMenuDetails extends StatelessWidget {
                   ),
                 )),
             Positioned(
-            bottom: bottomOffset,
-              left: leftOffset,
-              child: Column(children: [
-                 AbsorbPointer(
-                    absorbing: true,
-                    child: Container(
-                        width: childSize.width,
-                        height: childSize.height,
-                        child: child)),
-                        Container(height: 10),
-                TweenAnimationBuilder(
-                duration: Duration(milliseconds: 200),
-                builder: (BuildContext context, value, Widget child) {
-                  return Transform.scale(
-                    scale: value,
-                    alignment: Alignment.center,
-                    child: child,
-                  );
-                },
-                tween: Tween(begin: 0.0, end: 1.0),
-                child: Container(
-                  width: maxMenuWidth,
-                  decoration: menuBoxDecoration ??
-                      BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0)),
-                          boxShadow: [
-                            const BoxShadow(
-                                color: Colors.black38,
-                                blurRadius: 10,
-                                spreadRadius: 1)
-                          ]),
-                  child: ClipRRect(
-                    borderRadius: listViewBorderRadius ??
-                        const BorderRadius.all(Radius.circular(5.0)),
-                    child: ListView.builder(
-                      itemCount: menuItems.length,
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        FocusedMenuItem item = menuItems[index];
-                        Widget listItem = item == null
-                            ? Container()
-                            : GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  item.onPressed();
-                                },
-                                child: Container(
-                                    alignment: Alignment.center,
-                                    margin: const EdgeInsets.only(bottom: 1),
-                                    color: item.backgroundColor ?? Colors.white,
-                                    height: itemExtent ?? 50.0,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0, horizontal: 14),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          item.title,
-                                          if (item.trailingIcon != null) ...[
-                                            item.trailingIcon
-                                          ]
-                                        ],
-                                      ),
-                                    )));
-                        if (animateMenu) {
-                          return TweenAnimationBuilder(
-                              builder: (context, value, child) {
-                                return Transform(
-                                  transform: Matrix4.rotationX(1.5708 * value),
-                                  alignment: Alignment.bottomCenter,
-                                  child: child,
-                                );
-                              },
-                              tween: Tween(begin: 1.0, end: 0.0),
-                              duration: Duration(milliseconds: index * 200),
-                              child: listItem);
-                        } else {
-                          return listItem;
-                        }
+                bottom: bottomOffset,
+                left: leftOffset,
+                child: Column(
+                  children: [
+                    AbsorbPointer(
+                        absorbing: true,
+                        child: Container(
+                            width: childSize.width,
+                            height: childSize.height,
+                            child: child)),
+                    Container(height: 10),
+                    TweenAnimationBuilder(
+                      duration: Duration(milliseconds: 200),
+                      builder: (BuildContext context, value, Widget child) {
+                        return Transform.scale(
+                          scale: value,
+                          alignment: Alignment.center,
+                          child: child,
+                        );
                       },
+                      tween: Tween(begin: 0.0, end: 1.0),
+                      child: Container(
+                        width: maxMenuWidth,
+                        decoration: menuBoxDecoration ??
+                            BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(5.0)),
+                                boxShadow: [
+                                  const BoxShadow(
+                                      color: Colors.black38,
+                                      blurRadius: 10,
+                                      spreadRadius: 1)
+                                ]),
+                        child: ClipRRect(
+                          borderRadius: listViewBorderRadius ??
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          child: ListView.builder(
+                            itemCount: menuItems.length,
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              FocusedMenuItem item = menuItems[index];
+                              Widget listItem = item == null
+                                  ? Container()
+                                  : GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        item.onPressed();
+                                      },
+                                      child: Container(
+                                          alignment: Alignment.center,
+                                          margin:
+                                              const EdgeInsets.only(bottom: 1),
+                                          color: item.backgroundColor ??
+                                              Colors.white,
+                                          height: itemExtent ?? 50.0,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0, horizontal: 14),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[
+                                                item.title,
+                                                if (item.trailingIcon !=
+                                                    null) ...[item.trailingIcon]
+                                              ],
+                                            ),
+                                          )));
+                              if (animateMenu) {
+                                return TweenAnimationBuilder(
+                                    builder: (context, value, child) {
+                                      return Transform(
+                                        transform:
+                                            Matrix4.rotationX(1.5708 * value),
+                                        alignment: Alignment.bottomCenter,
+                                        child: child,
+                                      );
+                                    },
+                                    tween: Tween(begin: 1.0, end: 0.0),
+                                    duration:
+                                        Duration(milliseconds: index * 200),
+                                    child: listItem);
+                              } else {
+                                return listItem;
+                              }
+                            },
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              
-             
-              ],)
-            ),
-           /* Positioned(
+                  ],
+                )),
+            /* Positioned(
                 top: childOffset.dy,
                 left: childOffset.dx,
                 child: ),*/
