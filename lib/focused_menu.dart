@@ -82,7 +82,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
     double setmenuHeight = 0.0;
     widget.menuItems.forEach((element) {
       if (element != null){
-        setmenuHeight += widget.menuItemExtent;
+        setmenuHeight += widget.menuItemExtent ?? 50.0;
       }
      });
     await Navigator.push(
