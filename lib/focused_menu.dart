@@ -165,7 +165,7 @@ class FocusedMenuDetails extends StatelessWidget {
             size.height - bottomOffsetHeight
         ? childOffset.dy + childSize.height + menuOffset
         : childOffset.dy - menuHeight - menuOffset;*/
-        var childpos = size.height - childOffset.dy - MediaQuery.of(context).padding.top;
+        var childpos = size.height - childOffset.dy - bottomOffsetHeight;
     final bottomOffset = childpos >
             (menuItems.where((element) => element != null).length *
                     (itemExtent ?? 50.0) + childSize.height)
