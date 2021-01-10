@@ -165,7 +165,7 @@ class FocusedMenuDetails extends StatelessWidget {
             size.height - bottomOffsetHeight
         ? childOffset.dy + childSize.height + menuOffset
         : childOffset.dy - menuHeight - menuOffset;*/
-    final bottomOffset = childOffset.dy > (menuItems.where((element) => element != null).length * (itemExtent ?? 50.0) + childSize.height + 10)? childOffset.dy: (menuItems.where((element) => element != null).length * (itemExtent ?? 50.0) + childSize.height + 10);
+    final bottomOffset = childOffset.dy > (menuItems.where((element) => element != null).length * (itemExtent ?? 50.0) + childSize.height + 10)? childOffset.dy: (menuItems.where((element) => element != null).length * (itemExtent ?? 50.0) + childSize.height + 10)- childOffset.dy;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -188,6 +188,13 @@ class FocusedMenuDetails extends StatelessWidget {
             bottom: bottomOffset,
               left: leftOffset,
               child: Column(children: [
+                 AbsorbPointer(
+                    absorbing: true,
+                    child: Container(
+                        width: childSize.width,
+                        height: childSize.height,
+                        child: child)),
+                        Container(height: 10),
                 TweenAnimationBuilder(
                 duration: Duration(milliseconds: 200),
                 builder: (BuildContext context, value, Widget child) {
@@ -267,13 +274,8 @@ class FocusedMenuDetails extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(height: 10),
-              AbsorbPointer(
-                    absorbing: true,
-                    child: Container(
-                        width: childSize.width,
-                        height: childSize.height,
-                        child: child))
+              
+             
               ],)
             ),
            /* Positioned(
