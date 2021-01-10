@@ -79,6 +79,12 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
 
   Future openMenu(BuildContext context) async {
     getOffset();
+    double setmenuHeight = 0.0;
+    widget.menuItems.forEach((element) {
+      if (element != null){
+        setmenuHeight += widget.menuItemExtent;
+      }
+     });
     await Navigator.push(
         context,
         PageRouteBuilder(
@@ -101,6 +107,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                     bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
                     menuOffset: widget.menuOffset ?? 0,
                     listViewBorderRadius: widget.listViewBorderRadius,
+                    setmenuHeight: setmenuHeight,
                   ));
             },
             fullscreenDialog: true,
@@ -122,6 +129,7 @@ class FocusedMenuDetails extends StatelessWidget {
   final double bottomOffsetHeight;
   final double menuOffset;
   final BorderRadius listViewBorderRadius;
+  final double setmenuHeight;
 
   const FocusedMenuDetails(
       {Key key,
@@ -137,14 +145,15 @@ class FocusedMenuDetails extends StatelessWidget {
       @required this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
-      this.listViewBorderRadius})
+      this.listViewBorderRadius,
+      this.setmenuHeight})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    final maxMenuHeight = size.height * 0.45;
+    final maxMenuHeight = setmenuHeight;
     final listHeight = menuItems.length * (itemExtent ?? 50.0);
 
     final maxMenuWidth = menuWidth ?? (size.width * 0.70);
@@ -207,7 +216,7 @@ class FocusedMenuDetails extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: menuItems.length,
                       padding: EdgeInsets.zero,
-                      physics: AlwaysScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         FocusedMenuItem item = menuItems[index];
                         Widget listItem = item == null
