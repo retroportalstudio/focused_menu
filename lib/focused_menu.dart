@@ -161,10 +161,11 @@ class FocusedMenuDetails extends StatelessWidget {
     final leftOffset = (childOffset.dx + maxMenuWidth) < size.width
         ? childOffset.dx
         : (childOffset.dx - maxMenuWidth + childSize.width);
-    final topOffset = (childOffset.dy + menuHeight + childSize.height) <
+    /*final topOffset = (childOffset.dy + menuHeight + childSize.height) <
             size.height - bottomOffsetHeight
         ? childOffset.dy + childSize.height + menuOffset
-        : childOffset.dy - menuHeight - menuOffset;
+        : childOffset.dy - menuHeight - menuOffset;*/
+    final bottomOffset = childOffset.dy > (menuItems.where((element) => element != null).length * (itemExtent ?? 50.0) + childSize.height + 10)? childOffset.dy: (menuItems.where((element) => element != null).length * (itemExtent ?? 50.0) + childSize.height + 10);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -184,9 +185,10 @@ class FocusedMenuDetails extends StatelessWidget {
                   ),
                 )),
             Positioned(
-              top: topOffset,
+            bottom: bottomOffset,
               left: leftOffset,
-              child: TweenAnimationBuilder(
+              child: Column(children: [
+                TweenAnimationBuilder(
                 duration: Duration(milliseconds: 200),
                 builder: (BuildContext context, value, Widget child) {
                   return Transform.scale(
@@ -265,16 +267,19 @@ class FocusedMenuDetails extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            Positioned(
-                top: childOffset.dy,
-                left: childOffset.dx,
-                child: AbsorbPointer(
+              Container(height: 10),
+              AbsorbPointer(
                     absorbing: true,
                     child: Container(
                         width: childSize.width,
                         height: childSize.height,
-                        child: child))),
+                        child: child))
+              ],)
+            ),
+           /* Positioned(
+                top: childOffset.dy,
+                left: childOffset.dx,
+                child: ),*/
           ],
         ),
       ),
