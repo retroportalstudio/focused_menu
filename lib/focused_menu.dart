@@ -151,6 +151,7 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
+  final bool activateTap;
 
   const FocusedMenuDetails(
       {Key key,
@@ -165,8 +166,10 @@ class FocusedMenuDetails extends StatelessWidget {
       @required this.blurBackgroundColor,
       @required this.menuWidth,
       this.bottomOffsetHeight,
-      this.menuOffset})
-      : super(key: key);
+      this.menuOffset,
+      bool activateTap})
+      : this.activateTap = activateTap ?? false,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -272,9 +275,17 @@ class FocusedMenuDetails extends StatelessWidget {
               ),
             ),
             Positioned(
-                top: childOffset.dy,
-                left: childOffset.dx,
-                child: AbsorbPointer(absorbing: true, child: Container(width: childSize.width, height: childSize.height, child: child))),
+              top: childOffset.dy,
+              left: childOffset.dx,
+              child: AbsorbPointer(
+                absorbing: activateTap,
+                child: Container(
+                  width: childSize.width,
+                  height: childSize.height,
+                  child: child,
+                ),
+              ),
+            ),
           ],
         ),
       ),
