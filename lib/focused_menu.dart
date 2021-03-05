@@ -6,25 +6,25 @@ import 'package:focused_menu/modals.dart';
 
 class FocusedMenuHolder extends StatefulWidget {
   final Widget child;
-  final double menuItemExtent;
-  final double menuWidth;
+  final double? menuItemExtent;
+  final double? menuWidth;
   final List<FocusedMenuItem> menuItems;
-  final bool animateMenuItems;
-  final BoxDecoration menuBoxDecoration;
+  final bool? animateMenuItems;
+  final BoxDecoration? menuBoxDecoration;
   final Function onPressed;
-  final Duration duration;
-  final double blurSize;
-  final Color blurBackgroundColor;
-  final double bottomOffsetHeight;
-  final double menuOffset;
+  final Duration? duration;
+  final double? blurSize;
+  final Color? blurBackgroundColor;
+  final double? bottomOffsetHeight;
+  final double? menuOffset;
   /// Open with tap insted of long press.
   final bool openWithTap;
 
   const FocusedMenuHolder(
-      {Key key,
-      @required this.child,
-      @required this.onPressed,
-      @required this.menuItems,
+      {Key? key,
+      required this.child,
+      required this.onPressed,
+      required this.menuItems,
       this.duration,
       this.menuBoxDecoration,
       this.menuItemExtent,
@@ -44,10 +44,10 @@ class FocusedMenuHolder extends StatefulWidget {
 class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
   GlobalKey containerKey = GlobalKey();
   Offset childOffset = Offset(0, 0);
-  Size childSize;
+  Size? childSize;
 
   getOffset(){
-    RenderBox renderBox = containerKey.currentContext.findRenderObject();
+    RenderBox renderBox = containerKey.currentContext!.findRenderObject() as RenderBox;
     Size size = renderBox.size;
     Offset offset = renderBox.localToGlobal(Offset.zero);
     setState(() {
@@ -106,20 +106,20 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
 
 class FocusedMenuDetails extends StatelessWidget {
   final List<FocusedMenuItem> menuItems;
-  final BoxDecoration menuBoxDecoration;
+  final BoxDecoration? menuBoxDecoration;
   final Offset childOffset;
-  final double itemExtent;
-  final Size childSize;
+  final double? itemExtent;
+  final Size? childSize;
   final Widget child;
   final bool animateMenu;
-  final double blurSize;
-  final double menuWidth;
-  final Color blurBackgroundColor;
-  final double bottomOffsetHeight;
-  final double menuOffset;
+  final double? blurSize;
+  final double? menuWidth;
+  final Color? blurBackgroundColor;
+  final double? bottomOffsetHeight;
+  final double? menuOffset;
 
   const FocusedMenuDetails(
-      {Key key, @required this.menuItems, @required this.child, @required this.childOffset, @required this.childSize,@required this.menuBoxDecoration, @required this.itemExtent,@required this.animateMenu,@required this.blurSize,@required this.blurBackgroundColor,@required this.menuWidth, this.bottomOffsetHeight, this.menuOffset})
+      {Key? key, required this.menuItems, required this.child, required this.childOffset, required this.childSize,required this.menuBoxDecoration, required this.itemExtent,required this.animateMenu,required this.blurSize,required this.blurBackgroundColor,required this.menuWidth, this.bottomOffsetHeight, this.menuOffset})
       : super(key: key);
 
   @override
@@ -131,8 +131,8 @@ class FocusedMenuDetails extends StatelessWidget {
 
     final maxMenuWidth = menuWidth??(size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
-    final leftOffset = (childOffset.dx+maxMenuWidth ) < size.width ? childOffset.dx: (childOffset.dx-maxMenuWidth+childSize.width);
-    final topOffset = (childOffset.dy + menuHeight + childSize.height) < size.height - bottomOffsetHeight ? childOffset.dy + childSize.height + menuOffset : childOffset.dy - menuHeight - menuOffset;
+    final leftOffset = (childOffset.dx+maxMenuWidth ) < size.width ? childOffset.dx: (childOffset.dx-maxMenuWidth+childSize!.width);
+    final topOffset = (childOffset.dy + menuHeight + childSize!.height) < size.height - bottomOffsetHeight! ? childOffset.dy + childSize!.height + menuOffset! : childOffset.dy - menuHeight - menuOffset!;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -154,7 +154,7 @@ class FocusedMenuDetails extends StatelessWidget {
               left: leftOffset,
               child: TweenAnimationBuilder(
                 duration: Duration(milliseconds: 200),
-                builder: (BuildContext context, value, Widget child) {
+                builder: (BuildContext context, dynamic value, Widget? child) {
                   return Transform.scale(
                     scale: value,
                     alignment: Alignment.center,
@@ -194,15 +194,15 @@ class FocusedMenuDetails extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
+                                    children: <Widget?>[
                                       item.title,
                                       if (item.trailingIcon != null) ...[item.trailingIcon]
-                                    ],
+                                    ] as List<Widget>,
                                   ),
                                 )));
                         if (animateMenu) {
                           return TweenAnimationBuilder(
-                              builder: (context, value, child) {
+                              builder: (context, dynamic value, child) {
                                 return Transform(
                                   transform: Matrix4.rotationX(1.5708 * value),
                                   alignment: Alignment.bottomCenter,
@@ -222,8 +222,8 @@ class FocusedMenuDetails extends StatelessWidget {
               ),
             ),
             Positioned(top: childOffset.dy, left: childOffset.dx, child: AbsorbPointer(absorbing: true, child: Container(
-                width: childSize.width,
-                height: childSize.height,
+                width: childSize!.width,
+                height: childSize!.height,
                 child: child))),
           ],
         ),
