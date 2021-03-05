@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class FocusedMenuItem {
-  Color backgroundColor;
+  Color? backgroundColor;
   Widget title;
-  Icon trailingIcon;
+  Icon? trailingIcon;
   Function onPressed;
 
   FocusedMenuItem(
       {this.backgroundColor,
-      @required this.title,
+      required this.title,
       this.trailingIcon,
-      @required this.onPressed});
+      required this.onPressed});
 }
