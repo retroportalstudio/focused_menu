@@ -194,10 +194,10 @@ class FocusedMenuDetails extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: <Widget?>[
+                                    children: <Widget>[
                                       item.title,
-                                      if (item.trailingIcon != null) ...[item.trailingIcon]
-                                    ] as List<Widget>,
+                                      if (item.trailingIcon != null) ...[item.trailingIcon!]
+                                    ],
                                   ),
                                 )));
                         if (animateMenu) {
