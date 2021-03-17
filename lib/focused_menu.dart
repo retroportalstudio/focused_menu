@@ -34,9 +34,11 @@ class FocusedMenuHolder extends StatefulWidget {
 
   /// Open with tap insted of long press.
   final bool openWithTap;
+  final BuildContext context;
 
   const FocusedMenuHolder({
     Key key,
+    this.context,
     @required this.child,
     @required this.menuItems,
     this.onPressed,
@@ -58,10 +60,10 @@ class FocusedMenuHolder extends StatefulWidget {
 }
 
 class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
+  BuildContext context;
   GlobalKey containerKey = GlobalKey();
   Offset childOffset = Offset(0, 0);
   Size childSize;
-
   getOffset() {
     RenderBox renderBox = containerKey.currentContext.findRenderObject();
     Size size = renderBox.size;
@@ -70,6 +72,16 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
       this.childOffset = Offset(offset.dx, offset.dy);
       childSize = size;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.context != null) {
+      context = widget.context;
+    } else {
+      context = super.context;
+    }
   }
 
   void openMenuHandler() {
@@ -151,7 +163,6 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
-  final bool activateTap;
 
   const FocusedMenuDetails(
       {Key key,
@@ -168,8 +179,7 @@ class FocusedMenuDetails extends StatelessWidget {
       this.bottomOffsetHeight,
       this.menuOffset,
       bool activateTap})
-      : this.activateTap = activateTap ?? false,
-        super(key: key);
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -278,7 +288,7 @@ class FocusedMenuDetails extends StatelessWidget {
               top: childOffset.dy,
               left: childOffset.dx,
               child: AbsorbPointer(
-                absorbing: activateTap,
+                absorbing: true,
                 child: Container(
                   width: childSize.width,
                   height: childSize.height,
