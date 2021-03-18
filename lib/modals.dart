@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FocusedMenuItem {
   Color? backgroundColor;
   Widget title;
-  Icon? trailingIcon;
+  ImageIcon? trailingIcon;
   Function onPressed;
 
   FocusedMenuItem(
