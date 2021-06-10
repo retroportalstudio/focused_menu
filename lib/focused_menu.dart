@@ -16,28 +16,31 @@ class FocusedMenuHolder extends StatefulWidget {
   final double? blurSize;
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
-  final double? menuOffset;
+  final double? menuTopOffset;
+  final double? menuLeftOffset;
+
   /// Open with tap insted of long press.
   final bool openWithTap;
   final Function? onLongPressed;
 
-  const FocusedMenuHolder(
-      {Key? key,
-      required this.child,
-      required this.onPressed,
-      required this.menuItems,
-      this.duration,
-      this.menuBoxDecoration,
-      this.menuItemExtent,
-      this.animateMenuItems,
-      this.blurSize,
-      this.blurBackgroundColor,
-      this.menuWidth,
-      this.bottomOffsetHeight,
-      this.menuOffset,
-      this.openWithTap = false,
-      this.onLongPressed})
-      : super(key: key);
+  const FocusedMenuHolder({
+    Key? key,
+    required this.child,
+    required this.onPressed,
+    required this.menuItems,
+    this.duration,
+    this.menuBoxDecoration,
+    this.menuItemExtent,
+    this.animateMenuItems,
+    this.blurSize,
+    this.blurBackgroundColor,
+    this.menuWidth,
+    this.bottomOffsetHeight,
+    this.menuTopOffset,
+    this.menuLeftOffset,
+    this.openWithTap = false,
+    this.onLongPressed,
+  }) : super(key: key);
 
   @override
   _FocusedMenuHolderState createState() => _FocusedMenuHolderState();
@@ -48,8 +51,9 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
   Offset childOffset = Offset(0, 0);
   Size? childSize;
 
-  getOffset(){
-    RenderBox renderBox = containerKey.currentContext!.findRenderObject() as RenderBox;
+  getOffset() {
+    RenderBox renderBox =
+        containerKey.currentContext!.findRenderObject() as RenderBox;
     Size size = renderBox.size;
     Offset offset = renderBox.localToGlobal(Offset.zero);
     setState(() {
@@ -99,7 +103,8 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                     blurBackgroundColor: widget.blurBackgroundColor,
                     animateMenu: widget.animateMenuItems ?? true,
                     bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
-                    menuOffset: widget.menuOffset ?? 0,
+                    menuTopOffset: widget.menuTopOffset ?? 0,
+                    menuLeftOffset: widget.menuLeftOffset ?? 0,
                   ));
             },
             fullscreenDialog: true,
@@ -118,12 +123,26 @@ class FocusedMenuDetails extends StatelessWidget {
   final double? blurSize;
   final double? menuWidth;
   final Color? blurBackgroundColor;
-  final double? bottomOffsetHeight;
-  final double? menuOffset;
+  final double bottomOffsetHeight;
+  final double menuTopOffset;
+  final double menuLeftOffset;
 
-  const FocusedMenuDetails(
-      {Key? key, required this.menuItems, required this.child, required this.childOffset, required this.childSize,required this.menuBoxDecoration, required this.itemExtent,required this.animateMenu,required this.blurSize,required this.blurBackgroundColor,required this.menuWidth, this.bottomOffsetHeight, this.menuOffset})
-      : super(key: key);
+  const FocusedMenuDetails({
+    Key? key,
+    required this.menuItems,
+    required this.child,
+    required this.childOffset,
+    required this.childSize,
+    required this.menuBoxDecoration,
+    required this.itemExtent,
+    required this.animateMenu,
+    required this.blurSize,
+    required this.blurBackgroundColor,
+    required this.menuWidth,
+    required this.menuLeftOffset,
+    required this.menuTopOffset,
+    required this.bottomOffsetHeight,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,10 +151,15 @@ class FocusedMenuDetails extends StatelessWidget {
     final maxMenuHeight = size.height * 0.45;
     final listHeight = menuItems.length * (itemExtent ?? 50.0);
 
-    final maxMenuWidth = menuWidth??(size.width * 0.70);
+    final maxMenuWidth = menuWidth ?? (size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
-    final leftOffset = (childOffset.dx+maxMenuWidth ) < size.width ? childOffset.dx: (childOffset.dx-maxMenuWidth+childSize!.width);
-    final topOffset = (childOffset.dy + menuHeight + childSize!.height) < size.height - bottomOffsetHeight! ? childOffset.dy + childSize!.height + menuOffset! : childOffset.dy - menuHeight - menuOffset!;
+    final leftOffset = (childOffset.dx + maxMenuWidth) < size.width
+        ? childOffset.dx + menuLeftOffset
+        : (childOffset.dx - maxMenuWidth + childSize!.width) + menuLeftOffset;
+    final topOffset = (childOffset.dy + menuHeight + childSize!.height) <
+            size.height - bottomOffsetHeight
+        ? childOffset.dy + childSize!.height + menuTopOffset
+        : childOffset.dy - menuHeight - menuTopOffset;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -147,9 +171,11 @@ class FocusedMenuDetails extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: blurSize??4, sigmaY: blurSize??4),
+                  filter: ImageFilter.blur(
+                      sigmaX: blurSize ?? 4, sigmaY: blurSize ?? 4),
                   child: Container(
-                    color: (blurBackgroundColor??Colors.black).withOpacity(0.7),
+                    color:
+                        (blurBackgroundColor ?? Colors.black).withOpacity(0.7),
                   ),
                 )),
             Positioned(
@@ -171,8 +197,14 @@ class FocusedMenuDetails extends StatelessWidget {
                   decoration: menuBoxDecoration ??
                       BoxDecoration(
                           color: Colors.grey.shade200,
-                          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                          boxShadow: [const BoxShadow(color: Colors.black38, blurRadius: 10, spreadRadius: 1)]),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
+                          boxShadow: [
+                            const BoxShadow(
+                                color: Colors.black38,
+                                blurRadius: 10,
+                                spreadRadius: 1)
+                          ]),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     child: ListView.builder(
@@ -182,11 +214,9 @@ class FocusedMenuDetails extends StatelessWidget {
                       itemBuilder: (context, index) {
                         FocusedMenuItem item = menuItems[index];
                         Widget listItem = GestureDetector(
-                            onTap:
-                                () {
+                            onTap: () {
                               Navigator.pop(context);
                               item.onPressed();
-
                             },
                             child: Container(
                                 alignment: Alignment.center,
@@ -194,12 +224,16 @@ class FocusedMenuDetails extends StatelessWidget {
                                 color: item.backgroundColor ?? Colors.white,
                                 height: itemExtent ?? 50.0,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8.0, horizontal: 14),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       item.title,
-                                      if (item.trailingIcon != null) ...[item.trailingIcon!]
+                                      if (item.trailingIcon != null) ...[
+                                        item.trailingIcon!
+                                      ]
                                     ],
                                   ),
                                 )));
@@ -224,10 +258,15 @@ class FocusedMenuDetails extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(top: childOffset.dy, left: childOffset.dx, child: AbsorbPointer(absorbing: true, child: Container(
-                width: childSize!.width,
-                height: childSize!.height,
-                child: child))),
+            Positioned(
+                top: childOffset.dy,
+                left: childOffset.dx,
+                child: AbsorbPointer(
+                    absorbing: true,
+                    child: Container(
+                        width: childSize!.width,
+                        height: childSize!.height,
+                        child: child))),
           ],
         ),
       ),
