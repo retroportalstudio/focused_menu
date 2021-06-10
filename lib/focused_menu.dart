@@ -19,6 +19,7 @@ class FocusedMenuHolder extends StatefulWidget {
   final double? menuOffset;
   /// Open with tap insted of long press.
   final bool openWithTap;
+  final Function? onLongPressed;
 
   const FocusedMenuHolder(
       {Key? key,
@@ -34,7 +35,8 @@ class FocusedMenuHolder extends StatefulWidget {
       this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
-      this.openWithTap = false})
+      this.openWithTap = false,
+      this.onLongPressed})
       : super(key: key);
 
   @override
@@ -67,6 +69,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
           }
         },
         onLongPress: () async {
+          widget.onLongPressed?.call()
           if (!widget.openWithTap) {
             await openMenu(context);
           }
