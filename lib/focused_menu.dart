@@ -259,22 +259,32 @@ class FocusedMenuDetails extends StatelessWidget {
         child: Container(
           color: Colors.white,
           width: size.width,
-          height: 100,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: toolbarButtons
-                  .map((e) => TextButton(
-                        style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all<Color>(e.buttonTextColor ?? Colors.blue),
-                        ),
-                        child: Text(e.buttonTitle),
-                        onPressed: e.onPressed,
-                      ))
-                  .toList()),
+          height: 75,
+          alignment: Alignment.topLeft,
+          child: _getButtons(toolbarButtons),
         ),
         bottom: 0,
       );
     }
     return Container();
+  }
+
+  Widget _getButtons(List<ToolbarButtonItem> toolbarButtons) {
+    List<Widget> list = [];
+    list.add(new SizedBox(
+      width: 30,
+    ));
+    for (var i = 0; i < toolbarButtons.length; i++) {
+      list.add(new IconButton(
+        onPressed: toolbarButtons[i].onPressed,
+        icon: toolbarButtons[i].buttonIcon,
+        iconSize: 30.0,
+        color: toolbarButtons[i].buttonIconColor,
+      ));
+      list.add(new SizedBox(
+        width: 15,
+      ));
+    }
+    return new Row(children: list);
   }
 }

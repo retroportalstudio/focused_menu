@@ -10,9 +10,9 @@ class FocusedMenuItem {
 }
 
 class ToolbarButtonItem {
-  String buttonTitle;
-  Color? buttonTextColor;
+  Icon buttonIcon;
+  Color? buttonIconColor;
   VoidCallback onPressed;
 
-  ToolbarButtonItem({required this.buttonTitle, this.buttonTextColor, required this.onPressed});
+  ToolbarButtonItem({required this.buttonIcon, this.buttonIconColor, required this.onPressed});
 }
