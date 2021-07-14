@@ -252,6 +252,7 @@ class FocusedMenuDetails extends StatelessWidget {
     );
   }
 
+//add toolbar to bottom of page
   Widget bottomToolbarWidget(Size size, List<ToolbarButtonItem>? toolbarButtons) {
     if (toolbarButtons != null) {
       return Positioned(
