@@ -59,20 +59,20 @@ class MyHomePage extends StatelessWidget {
                 height: 10,
               ),
               //comment this row out to stop errors
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: <Widget>[
-              //     DropdownButton(
-              //         style: TextStyle(fontSize: 15, color: Colors.black),
-              //         icon: Icon(Icons.keyboard_arrow_down),
-              //         underline: Container(
-              //           color: Colors.white,
-              //         ),
-              //         items: ["Featured", "Most Rated", "Recent", "Popular"].map<DropdownMenuItem>((e) => DropdownMenuItem(child: Text(e))).toList(),
-              //         onChanged: (newItem) {}),
-              //     IconButton(icon: Icon(Icons.sort), onPressed: () {})
-              //   ],
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  DropdownButton(
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      underline: Container(
+                        color: Colors.white,
+                      ),
+                      items: ["Featured", "Most Rated", "Recent", "Popular"].map<DropdownMenuItem>((e) => DropdownMenuItem(child: Text(e))).toList(),
+                      onChanged: (newItem) {}),
+                  IconButton(icon: Icon(Icons.sort), onPressed: () {})
+                ],
+              ),
               SizedBox(
                 height: 10,
               ),
@@ -92,8 +92,8 @@ class MyHomePage extends StatelessWidget {
                             bottomOffsetHeight: 100,
                             openWithTap: false,
                             toolbarButtons: [
-                              ToolbarButtonItem(buttonTitle: "button 1", onPressed: () {}),
-                              ToolbarButtonItem(buttonTitle: "button 2", onPressed: () => _test("Hello"), buttonTextColor: Colors.green),
+                              ToolbarButtonItem(buttonIcon: Icon(Icons.delete), onPressed: () {}),
+                              ToolbarButtonItem(buttonIcon: Icon(Icons.cabin), onPressed: () => _test("Hello"), buttonIconColor: Colors.green),
                             ],
                             menuItems: <FocusedMenuItem>[
                               FocusedMenuItem(
