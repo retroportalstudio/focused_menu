@@ -259,7 +259,7 @@ class FocusedMenuDetails extends StatelessWidget {
         child: Container(
           color: Colors.white,
           width: size.width,
-          height: 50,
+          height: 100,
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: toolbarButtons
