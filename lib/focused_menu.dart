@@ -17,6 +17,7 @@ class FocusedMenuHolder extends StatefulWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
+  final bool enableMenuScroll;
 
   /// Open with tap insted of long press.
   final bool openWithTap;
@@ -38,6 +39,7 @@ class FocusedMenuHolder extends StatefulWidget {
     this.menuWidth,
     this.bottomOffsetHeight,
     this.menuOffset,
+    this.enableMenuScroll = true,
     this.openWithTap = false,
     this.toolbarButtons,
   }) : super(key: key);
@@ -101,6 +103,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                     blurBackgroundColor: widget.blurBackgroundColor,
                     animateMenu: widget.animateMenuItems ?? true,
                     bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
+                    enableMenuScroll: widget.enableMenuScroll,
                     menuOffset: widget.menuOffset ?? 0,
                     toolbarButtons: widget.toolbarButtons,
                   ));
@@ -122,6 +125,7 @@ class FocusedMenuDetails extends StatelessWidget {
   final double? menuWidth;
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
+  final bool enableMenuScroll;
   final double? menuOffset;
   final List<ToolbarButtonItem>? toolbarButtons;
 
@@ -138,6 +142,7 @@ class FocusedMenuDetails extends StatelessWidget {
     required this.blurBackgroundColor,
     required this.menuWidth,
     this.bottomOffsetHeight,
+    required this.enableMenuScroll,
     this.menuOffset,
     this.toolbarButtons,
   }) : super(key: key);
@@ -197,7 +202,7 @@ class FocusedMenuDetails extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: menuItems.length,
                       padding: EdgeInsets.zero,
-                      physics: BouncingScrollPhysics(),
+                      physics: enableMenuScroll == true ? BouncingScrollPhysics() : NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         FocusedMenuItem item = menuItems[index];
                         Widget listItem = GestureDetector(
