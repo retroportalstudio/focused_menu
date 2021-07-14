@@ -52,11 +52,13 @@ class MyHomePage extends StatelessWidget {
                 height: 10,
               ),
               TextField(
-                decoration: InputDecoration(border: InputBorder.none, hintText: "Look for your Interest!", fillColor: Colors.grey.shade200, filled: true),
+                decoration:
+                    InputDecoration(border: InputBorder.none, hintText: "Look for your Interest!", fillColor: Colors.grey.shade200, filled: true),
               ),
               SizedBox(
                 height: 10,
               ),
+              //comment this row out to stop errors
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -80,32 +82,48 @@ class MyHomePage extends StatelessWidget {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                   children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                       .map((e) => FocusedMenuHolder(
-                        menuWidth: MediaQuery.of(context).size.width*0.50,
-                        blurSize: 5.0,
-                        menuItemExtent: 45,
-                        menuBoxDecoration: BoxDecoration(color: Colors.grey,borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                        duration: Duration(milliseconds: 100),
-                        animateMenuItems: true,
-                        blurBackgroundColor: Colors.black54,
-                        bottomOffsetHeight: 100,
-                        openWithTap: true,
-                        menuItems: <FocusedMenuItem>[
-                          FocusedMenuItem(title: Text("Open"),trailingIcon: Icon(Icons.open_in_new) ,onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ScreenTwo()));
-                          }),
-                          FocusedMenuItem(title: Text("Share"),trailingIcon: Icon(Icons.share) ,onPressed: (){}),
-                          FocusedMenuItem(title: Text("Favorite"),trailingIcon: Icon(Icons.favorite_border) ,onPressed: (){}),
-                          FocusedMenuItem(title: Text("Delete",style: TextStyle(color: Colors.redAccent),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,) ,onPressed: (){}),
-                        ],
-                        onPressed: (){},
-                        child: Card(
+                            menuWidth: MediaQuery.of(context).size.width * 0.50,
+                            blurSize: 5.0,
+                            menuItemExtent: 45,
+                            menuBoxDecoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                            duration: Duration(milliseconds: 100),
+                            animateMenuItems: true,
+                            blurBackgroundColor: Colors.black54,
+                            bottomOffsetHeight: 100,
+                            openWithTap: false,
+                            toolbarButtons: [
+                              ToolbarButtonItem(buttonTitle: "button 1", onPressed: () {}),
+                              ToolbarButtonItem(buttonTitle: "button 2", onPressed: () {}, buttonTextColor: Colors.green),
+                            ],
+                            menuItems: <FocusedMenuItem>[
+                              FocusedMenuItem(
+                                  title: Text("Open"),
+                                  trailingIcon: Icon(Icons.open_in_new),
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenTwo()));
+                                  }),
+                              FocusedMenuItem(title: Text("Share"), trailingIcon: Icon(Icons.share), onPressed: () {}),
+                              FocusedMenuItem(title: Text("Favorite"), trailingIcon: Icon(Icons.favorite_border), onPressed: () {}),
+                              FocusedMenuItem(
+                                  title: Text(
+                                    "Delete",
+                                    style: TextStyle(color: Colors.redAccent),
+                                  ),
+                                  trailingIcon: Icon(
+                                    Icons.delete,
+                                    color: Colors.redAccent,
+                                  ),
+                                  onPressed: () {}),
+                            ],
+                            onPressed: () {},
+                            child: Card(
                               child: Column(
                                 children: <Widget>[
                                   Image.asset("assets/images/image_$e.jpg"),
                                 ],
                               ),
                             ),
-                      ))
+                          ))
                       .toList(),
                 ),
               ),
@@ -113,11 +131,11 @@ class MyHomePage extends StatelessWidget {
           ),
         )),
         bottomNavigationBar: BottomNavigationBar(items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 2"),
-          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 3"),
-          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 4"),
-          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 5"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 2"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 3"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 4"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 5"),
         ]),
       ),
     );
