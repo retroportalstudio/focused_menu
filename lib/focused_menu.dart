@@ -267,25 +267,7 @@ class FocusedMenuDetails extends StatelessWidget {
                               Navigator.pop(context);
                               item.onPressed();
                             },
-                            child: Container(
-                                alignment: Alignment.center,
-                                margin: const EdgeInsets.only(bottom: 1),
-                                color: item.backgroundColor ?? Colors.white,
-                                height: itemExtent ?? 50.0,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 14),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      item.title,
-                                      if (item.trailingIcon != null) ...[
-                                        item.trailingIcon!
-                                      ]
-                                    ],
-                                  ),
-                                )));
+                            child: item);
                         if (animateMenu) {
                           return TweenAnimationBuilder(
                               builder: (context, dynamic value, child) {
