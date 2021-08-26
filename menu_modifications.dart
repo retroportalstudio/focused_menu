@@ -1,8 +1,5 @@
-library focused_menu;
-
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:focused_menu/modals.dart';
 
 enum TapType {
   TAP,
@@ -78,46 +75,41 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
   Widget build(BuildContext context) {
     return GestureDetector(
         key: containerKey,
-        onTap: (widget.openWithTapType == TapType.TAP)
-            ? () async {
-                // test removing this one and making the different onX calls null unless they are provided by the instantiation such as tapType
-                widget.onPressed();
-                await openMenu(context);
-              }
-            : null,
-        onLongPress: (widget.openWithTapType == TapType.LONG_PRESS)
-            ? () async {
-                // test removing this one and making the different onX calls null unless they are provided by the instantiation such as tapType
-                widget.onPressed();
-                await openMenu(context);
-              }
-            : null,
-        onSecondaryTap: (widget.openWithTapType == TapType.SECONDARY_TAP)
-            ? () async {
-                // test removing this one and making the different onX calls null unless they are provided by the instantiation such as tapType
-                widget.onPressed();
-                await openMenu(context);
-              }
-            : null,
-        onDoubleTap: (widget.openWithTapType == TapType.DOUBLE_TAP)
-            ? () async {
-                // test removing this one and making the different onX calls null unless they are provided by the instantiation such as tapType
-                widget.onPressed();
-                await openMenu(context);
-              }
-            : null,
-        onSecondaryLongPress:
-            (widget.openWithTapType == TapType.SECONDARY_LONG_PRESS)
-                ? () async {
-                    // test removing this one and making the different onX calls null unless they are provided by the instantiation such as tapType
-                    widget.onPressed();
-                    await openMenu(context);
-                  }
-                : null,
+        onTap: () async {
+          widget.onPressed();
+          if (widget.openWithTapType == TapType.TAP) {
+            await openMenu(context);
+          }
+        },
+        onLongPress: () async {
+          widget.onPressed();
+          if (widget.openWithTapType == TapType.LONG_PRESS) {
+            await openMenu(context);
+          }
+        },
+        onSecondaryTap: () async {
+          widget.onPressed();
+          if (widget.openWithTapType == TapType.SECONDARY_TAP) {
+            await openMenu(context);
+          }
+        },
+        onDoubleTap: () async {
+          widget.onPressed();
+          if (widget.openWithTapType == TapType.DOUBLE_TAP) {
+            await openMenu(context);
+          }
+        },
+        onSecondaryLongPress: () async {
+          widget.onPressed();
+          if (widget.openWithTapType == TapType.SECONDARY_LONG_PRESS) {
+            await openMenu(context);
+          }
+        },
         child: widget.child);
   }
 
   Future openMenu(BuildContext context) async {
+    print(widget.closeOnRePress);
     getOffset();
     await Navigator.push(
         context,
