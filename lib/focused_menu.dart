@@ -80,28 +80,24 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
         key: containerKey,
         onTap: (widget.openWithTapType == TapType.TAP)
             ? () async {
-                // test removing this one and making the different onX calls null unless they are provided by the instantiation such as tapType
                 widget.onPressed();
                 await openMenu(context);
               }
             : null,
         onLongPress: (widget.openWithTapType == TapType.LONG_PRESS)
             ? () async {
-                // test removing this one and making the different onX calls null unless they are provided by the instantiation such as tapType
                 widget.onPressed();
                 await openMenu(context);
               }
             : null,
         onSecondaryTap: (widget.openWithTapType == TapType.SECONDARY_TAP)
             ? () async {
-                // test removing this one and making the different onX calls null unless they are provided by the instantiation such as tapType
                 widget.onPressed();
                 await openMenu(context);
               }
             : null,
         onDoubleTap: (widget.openWithTapType == TapType.DOUBLE_TAP)
             ? () async {
-                // test removing this one and making the different onX calls null unless they are provided by the instantiation such as tapType
                 widget.onPressed();
                 await openMenu(context);
               }
@@ -109,7 +105,6 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
         onSecondaryLongPress:
             (widget.openWithTapType == TapType.SECONDARY_LONG_PRESS)
                 ? () async {
-                    // test removing this one and making the different onX calls null unless they are provided by the instantiation such as tapType
                     widget.onPressed();
                     await openMenu(context);
                   }
