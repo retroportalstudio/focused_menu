@@ -5,10 +5,12 @@ class FocusedMenuItem {
   Widget title;
   Icon? trailingIcon;
   Function onPressed;
+  bool closeOnTap;
 
   FocusedMenuItem(
       {this.backgroundColor,
       required this.title,
       this.trailingIcon,
-      required this.onPressed});
+      required this.onPressed,
+      this.closeOnTap = true});
 }
