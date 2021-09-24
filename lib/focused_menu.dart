@@ -19,6 +19,7 @@ class FocusedMenuHolder extends StatefulWidget {
   final double? menuOffset;
   /// Open with tap insted of long press.
   final bool openWithTap;
+  final Alignment? align;
 
   const FocusedMenuHolder(
       {Key? key,
@@ -34,7 +35,8 @@ class FocusedMenuHolder extends StatefulWidget {
       this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
-      this.openWithTap = false})
+      this.openWithTap = false,
+      this.align})
       : super(key: key);
 
   @override
@@ -97,6 +99,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                     animateMenu: widget.animateMenuItems ?? true,
                     bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
                     menuOffset: widget.menuOffset ?? 0,
+                    align: widget.align,
                   ));
             },
             fullscreenDialog: true,
@@ -117,9 +120,10 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
+  final Alignment? align;
 
   const FocusedMenuDetails(
-      {Key? key, required this.menuItems, required this.child, required this.childOffset, required this.childSize,required this.menuBoxDecoration, required this.itemExtent,required this.animateMenu,required this.blurSize,required this.blurBackgroundColor,required this.menuWidth, this.bottomOffsetHeight, this.menuOffset})
+      {Key? key, required this.menuItems, required this.child, required this.childOffset, required this.childSize,required this.menuBoxDecoration, required this.itemExtent,required this.animateMenu,required this.blurSize,required this.blurBackgroundColor,required this.menuWidth, this.bottomOffsetHeight, this.menuOffset, this.align})
       : super(key: key);
 
   @override
@@ -131,8 +135,8 @@ class FocusedMenuDetails extends StatelessWidget {
 
     final maxMenuWidth = menuWidth??(size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
-    final leftOffset = (childOffset.dx+maxMenuWidth ) < size.width ? childOffset.dx: (childOffset.dx-maxMenuWidth+childSize!.width);
-    final topOffset = (childOffset.dy + menuHeight + childSize!.height) < size.height - bottomOffsetHeight! ? childOffset.dy + childSize!.height + menuOffset! : childOffset.dy - menuHeight - menuOffset!;
+    final leftOffset = (childOffset.dx+maxMenuWidth) < size.width && (align == null || align!.x < 1.0) ? childOffset.dx: (childOffset.dx-maxMenuWidth+childSize!.width);
+    final topOffset = (childOffset.dy + menuHeight + childSize!.height) < size.height - bottomOffsetHeight! && (align == null || align!.y == 1.0) ? childOffset.dy + childSize!.height + menuOffset! : childOffset.dy - menuHeight - menuOffset!;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
