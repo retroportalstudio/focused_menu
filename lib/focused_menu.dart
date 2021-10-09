@@ -151,6 +151,7 @@ class FocusedMenuDetails extends StatelessWidget {
     double scaledWidth = childSize!.width * activeScale!.toDouble();
     double scaledHeight = childSize!.height * activeScale!.toDouble();
     Size scaledChildSize = Size(scaledWidth, scaledHeight);
+    double sizeDiff = scaledChildSize.width - childSize!.width;
     //
     final maxMenuHeight = size.height * 0.45;
     final listHeight = menuItems.length * (itemExtent ?? 50.0);
@@ -164,12 +165,17 @@ class FocusedMenuDetails extends StatelessWidget {
     double? leftOffset = isLeft ? childOffset.dx : null;
     double? rightOffset =
         isLeft ? null : size.width - (childOffset.dx + childSize!.width);
+    // Calculating top offset for child and menu
+    final childtopOffset =
+        (childOffset.dy + childSize!.height) < size.height - bottomOffsetHeight!
+            ? childOffset.dy
+            : childOffset.dy - bottomOffsetHeight! - sizeDiff;
+    final menutopOffset =
+        (childOffset.dy + menuHeight + scaledChildSize.height) <
+                size.height - bottomOffsetHeight!
+            ? childOffset.dy + scaledChildSize.height + menuOffset!
+            : childtopOffset - menuHeight;
     //
-
-    final topOffset = (childOffset.dy + menuHeight + scaledChildSize.height) <
-            size.height - bottomOffsetHeight!
-        ? childOffset.dy + scaledChildSize.height + menuOffset!
-        : childOffset.dy - menuHeight - menuOffset!;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -189,7 +195,7 @@ class FocusedMenuDetails extends StatelessWidget {
                   ),
                 )),
             Positioned(
-              top: topOffset,
+              top: menutopOffset,
               left: leftOffset,
               right: rightOffset,
               child: TweenAnimationBuilder(
@@ -270,7 +276,7 @@ class FocusedMenuDetails extends StatelessWidget {
               ),
             ),
             Positioned(
-                top: childOffset.dy,
+                top: childtopOffset,
                 left: leftOffset,
                 right: rightOffset,
                 child: AbsorbPointer(

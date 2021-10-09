@@ -100,7 +100,7 @@ class MyHomePage extends StatelessWidget {
                             duration: Duration(milliseconds: 100),
                             animateMenuItems: true,
                             blurBackgroundColor: Colors.black54,
-                            bottomOffsetHeight: 50,
+                            bottomOffsetHeight: 0,
                             openWithTap: true,
                             activeScale: 1.3,
                             menuOffset: 0,
