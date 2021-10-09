@@ -17,7 +17,10 @@ class FocusedMenuHolder extends StatefulWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
-  final double? scaleChild;
+
+  /// Scales child size proportional to this factor
+
+  final double? scaleFactor;
 
   /// Open with tap insted of long press.
   final bool openWithTap;
@@ -37,8 +40,8 @@ class FocusedMenuHolder extends StatefulWidget {
       this.bottomOffsetHeight,
       this.menuOffset,
       this.openWithTap = false,
-      this.scaleChild = 1.0})
-      : assert(scaleChild! >= 0),
+      this.scaleFactor = 1.0})
+      : assert(scaleFactor! >= 0),
         super(key: key);
 
   @override
@@ -102,7 +105,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                       animateMenu: widget.animateMenuItems ?? true,
                       bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
                       menuOffset: widget.menuOffset ?? 0,
-                      scaleChild: widget.scaleChild));
+                      scaleFactor: widget.scaleFactor));
             },
             fullscreenDialog: true,
             opaque: false));
@@ -122,7 +125,7 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
-  final double? scaleChild;
+  final double? scaleFactor;
 
   const FocusedMenuDetails(
       {Key? key,
@@ -138,15 +141,15 @@ class FocusedMenuDetails extends StatelessWidget {
       required this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
-      this.scaleChild})
+      this.scaleFactor})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     // Calculating ScaledChild Size
-    double scaledWidth = childSize!.width * scaleChild!.toDouble();
-    double scaledHeight = childSize!.height * scaleChild!.toDouble();
+    double scaledWidth = childSize!.width * scaleFactor!.toDouble();
+    double scaledHeight = childSize!.height * scaleFactor!.toDouble();
     Size scaledChildSize = Size(scaledWidth, scaledHeight);
     double sizeDiff = scaledChildSize.width - childSize!.width;
     //

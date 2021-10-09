@@ -102,7 +102,7 @@ class MyHomePage extends StatelessWidget {
                             blurBackgroundColor: Colors.black54,
                             bottomOffsetHeight: 0,
                             openWithTap: true,
-                            scaleChild: 1.3,
+                            scaleFactor: 1.3,
                             menuOffset: 0,
                             menuItems: <FocusedMenuItem>[
                               FocusedMenuItem(
