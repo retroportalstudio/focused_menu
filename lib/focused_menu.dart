@@ -53,11 +53,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
   getOffset() {
     RenderBox renderBox =
         containerKey.currentContext!.findRenderObject() as RenderBox;
-    double scaledWidth = renderBox.size.width * widget.activeScale!.toDouble();
-    double scaledHeight =
-        renderBox.size.height * widget.activeScale!.toDouble();
-
-    Size size = Size(scaledWidth, scaledHeight);
+    Size size = renderBox.size;
     Offset offset = renderBox.localToGlobal(Offset.zero);
     setState(() {
       this.childOffset = Offset(offset.dx, offset.dy);
@@ -151,25 +147,28 @@ class FocusedMenuDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    // Calculating ScaledChild Size
+    double scaledWidth = childSize!.width * activeScale!.toDouble();
+    double scaledHeight = childSize!.height * activeScale!.toDouble();
+    Size scaledChildSize = Size(scaledWidth, scaledHeight);
+    //
     final maxMenuHeight = size.height * 0.45;
     final listHeight = menuItems.length * (itemExtent ?? 50.0);
 
     final maxMenuWidth = menuWidth ?? (size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
-    final updatedChildOffset = (childOffset.dx + maxMenuWidth) < size.width
-        ? childOffset.dx
-        : childOffset.dx -
-            (childSize!.width * activeScale!.toDouble() - childSize!.width);
-    final leftOffset = (childOffset.dx + maxMenuWidth) < size.width
-        ? childOffset.dx
-        : (childOffset.dx +
-            (childSize!.width - childSize!.width * activeScale!.toDouble()) -
-            maxMenuWidth +
-            childSize!.width);
-    final topOffset = (childOffset.dy + menuHeight + childSize!.height) <
+
+    // Calculating left and right offset for child
+    bool isLeft = (childOffset.dx + maxMenuWidth) < size.width;
+
+    double? leftOffset = isLeft ? childOffset.dx : null;
+    double? rightOffset =
+        isLeft ? null : size.width - (childOffset.dx + childSize!.width);
+    //
+
+    final topOffset = (childOffset.dy + menuHeight + scaledChildSize.height) <
             size.height - bottomOffsetHeight!
-        ? childOffset.dy + childSize!.height + menuOffset!
+        ? childOffset.dy + scaledChildSize.height + menuOffset!
         : childOffset.dy - menuHeight - menuOffset!;
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -192,6 +191,7 @@ class FocusedMenuDetails extends StatelessWidget {
             Positioned(
               top: topOffset,
               left: leftOffset,
+              right: rightOffset,
               child: TweenAnimationBuilder(
                 duration: Duration(milliseconds: 200),
                 builder: (BuildContext context, dynamic value, Widget? child) {
@@ -271,12 +271,13 @@ class FocusedMenuDetails extends StatelessWidget {
             ),
             Positioned(
                 top: childOffset.dy,
-                left: updatedChildOffset,
+                left: leftOffset,
+                right: rightOffset,
                 child: AbsorbPointer(
                     absorbing: true,
                     child: Container(
-                        width: childSize!.width,
-                        height: childSize!.height,
+                        width: scaledChildSize.width,
+                        height: scaledChildSize.height,
                         child: child))),
           ],
         ),

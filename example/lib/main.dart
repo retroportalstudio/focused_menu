@@ -87,7 +87,7 @@ class MyHomePage extends StatelessWidget {
                 child: GridView(
                   physics: BouncingScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4),
+                      crossAxisCount: 2),
                   children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                       .map((e) => FocusedMenuHolder(
                             menuWidth: MediaQuery.of(context).size.width * 0.50,
@@ -100,9 +100,10 @@ class MyHomePage extends StatelessWidget {
                             duration: Duration(milliseconds: 100),
                             animateMenuItems: true,
                             blurBackgroundColor: Colors.black54,
-                            bottomOffsetHeight: 100,
+                            bottomOffsetHeight: 50,
                             openWithTap: true,
                             activeScale: 1.3,
+                            menuOffset: 0,
                             menuItems: <FocusedMenuItem>[
                               FocusedMenuItem(
                                   title: Text("Open"),
@@ -147,15 +148,16 @@ class MyHomePage extends StatelessWidget {
             ],
           ),
         )),
-        bottomNavigationBar:
-            BottomNavigationBar(items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 2"),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 3"),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 4"),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 5"),
-        ]),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   items: <BottomNavigationBarItem>[
+        //     BottomNavigationBarItem(icon: Icon(Icons.add), label: "Home"),
+        //     BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 2"),
+        //     BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 3"),
+        //     BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 4"),
+        //     BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 5"),
+        //   ],
       ),
+      // ),
     );
   }
 }
