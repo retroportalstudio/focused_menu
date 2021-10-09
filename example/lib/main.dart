@@ -87,7 +87,7 @@ class MyHomePage extends StatelessWidget {
                 child: GridView(
                   physics: BouncingScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
+                      crossAxisCount: 3),
                   children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                       .map((e) => FocusedMenuHolder(
                             menuWidth: MediaQuery.of(context).size.width * 0.50,
