@@ -92,10 +92,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                   child: FocusedMenuDetails(
                       itemExtent: widget.menuItemExtent,
                       menuBoxDecoration: widget.menuBoxDecoration,
-                      child: ScaleTransition(
-                        scale: animation,
-                        child: widget.child,
-                      ),
+                      child: widget.child,
                       childOffset: childOffset,
                       childSize: childSize,
                       menuItems: widget.menuItems,
