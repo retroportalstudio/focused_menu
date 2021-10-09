@@ -17,7 +17,7 @@ class FocusedMenuHolder extends StatefulWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
-  final double? activeScale;
+  final double? scaleChild;
 
   /// Open with tap insted of long press.
   final bool openWithTap;
@@ -37,8 +37,8 @@ class FocusedMenuHolder extends StatefulWidget {
       this.bottomOffsetHeight,
       this.menuOffset,
       this.openWithTap = false,
-      this.activeScale = 1.0})
-      : assert(activeScale! >= 0),
+      this.scaleChild = 1.0})
+      : assert(scaleChild! >= 0),
         super(key: key);
 
   @override
@@ -105,7 +105,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                       animateMenu: widget.animateMenuItems ?? true,
                       bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
                       menuOffset: widget.menuOffset ?? 0,
-                      activeScale: widget.activeScale));
+                      scaleChild: widget.scaleChild));
             },
             fullscreenDialog: true,
             opaque: false));
@@ -125,7 +125,7 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
-  final double? activeScale;
+  final double? scaleChild;
 
   const FocusedMenuDetails(
       {Key? key,
@@ -141,15 +141,15 @@ class FocusedMenuDetails extends StatelessWidget {
       required this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
-      this.activeScale})
+      this.scaleChild})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     // Calculating ScaledChild Size
-    double scaledWidth = childSize!.width * activeScale!.toDouble();
-    double scaledHeight = childSize!.height * activeScale!.toDouble();
+    double scaledWidth = childSize!.width * scaleChild!.toDouble();
+    double scaledHeight = childSize!.height * scaleChild!.toDouble();
     Size scaledChildSize = Size(scaledWidth, scaledHeight);
     double sizeDiff = scaledChildSize.width - childSize!.width;
     //

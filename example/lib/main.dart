@@ -97,12 +97,12 @@ class MyHomePage extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0))),
-                            duration: Duration(milliseconds: 100),
+                            duration: Duration(milliseconds: 300),
                             animateMenuItems: true,
                             blurBackgroundColor: Colors.black54,
                             bottomOffsetHeight: 0,
                             openWithTap: true,
-                            activeScale: 1.3,
+                            scaleChild: 1.3,
                             menuOffset: 0,
                             menuItems: <FocusedMenuItem>[
                               FocusedMenuItem(
