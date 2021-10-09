@@ -20,7 +20,7 @@ class FocusedMenuHolder extends StatefulWidget {
 
   /// Scales child size proportional to this factor
 
-  final double? scaleFactor;
+  final double scaleFactor;
 
   /// Open with tap insted of long press.
   final bool openWithTap;
@@ -41,7 +41,7 @@ class FocusedMenuHolder extends StatefulWidget {
       this.menuOffset,
       this.openWithTap = false,
       this.scaleFactor = 1.0})
-      : assert(scaleFactor! >= 0),
+      : assert(scaleFactor >= 0),
         super(key: key);
 
   @override
