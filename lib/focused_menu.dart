@@ -187,8 +187,6 @@ class FocusedMenuDetails extends StatelessWidget {
         ? childpos - itemsHeight
         : bottomOffsetHeight;
 
-    print(childpos - itemsHeight);
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
