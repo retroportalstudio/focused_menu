@@ -17,6 +17,8 @@ class FocusedMenuHolder extends StatefulWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
+  final double customLeftOffset;
+  final double customRightOffset;
   final BorderRadius listViewBorderRadius;
 
   /// Open with tap insted of long press.
@@ -36,6 +38,8 @@ class FocusedMenuHolder extends StatefulWidget {
       this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
+      this.customLeftOffset,
+      this.customRightOffset,
       this.listViewBorderRadius,
       this.openWithTap = false})
       : super(key: key);
@@ -128,6 +132,8 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
+  final double customLeftOffset;
+  final double customRightOffset;
   final BorderRadius listViewBorderRadius;
   final double setmenuHeight;
 
@@ -145,6 +151,8 @@ class FocusedMenuDetails extends StatelessWidget {
       @required this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
+      this.customLeftOffset,
+      this.customRightOffset,
       this.listViewBorderRadius,
       this.setmenuHeight})
       : super(key: key);
@@ -192,7 +200,8 @@ class FocusedMenuDetails extends StatelessWidget {
                 )),
             Positioned(
                 bottom: bottomOffset,
-                left: leftOffset,
+                left: customLeftOffset != null ? customLeftOffset: leftOffset,
+                right: customRightOffset,
                 child: Column(
                   children: [
                     AbsorbPointer(
