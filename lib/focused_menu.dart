@@ -17,8 +17,7 @@ class FocusedMenuHolder extends StatefulWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
-  final double customLeftOffset;
-  final double customRightOffset;
+  final Alignment menuItemsAlignment;
   final BorderRadius listViewBorderRadius;
 
   /// Open with tap insted of long press.
@@ -38,8 +37,7 @@ class FocusedMenuHolder extends StatefulWidget {
       this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
-      this.customLeftOffset,
-      this.customRightOffset,
+      this.menuItemsAlignment,
       this.listViewBorderRadius,
       this.openWithTap = false})
       : super(key: key);
@@ -110,6 +108,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                     animateMenu: widget.animateMenuItems ?? true,
                     bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
                     menuOffset: widget.menuOffset ?? 0,
+                    menuItemsAlignment: widget.menuItemsAlignment ?? Alignment.center,
                     listViewBorderRadius: widget.listViewBorderRadius,
                     setmenuHeight: setmenuHeight,
                   ));
@@ -132,8 +131,7 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
-  final double customLeftOffset;
-  final double customRightOffset;
+  final Alignment menuItemsAlignment;
   final BorderRadius listViewBorderRadius;
   final double setmenuHeight;
 
@@ -151,8 +149,7 @@ class FocusedMenuDetails extends StatelessWidget {
       @required this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
-      this.customLeftOffset,
-      this.customRightOffset,
+      @required this.menuItemsAlignment,
       this.listViewBorderRadius,
       this.setmenuHeight})
       : super(key: key);
@@ -200,8 +197,7 @@ class FocusedMenuDetails extends StatelessWidget {
                 )),
             Positioned(
                 bottom: bottomOffset,
-                left: customLeftOffset != null ? customLeftOffset: leftOffset,
-                right: customRightOffset,
+                left: leftOffset,
                 child: Column(
                   children: [
                     AbsorbPointer(
@@ -252,7 +248,7 @@ class FocusedMenuDetails extends StatelessWidget {
                                         item.onPressed();
                                       },
                                       child: Container(
-                                          alignment: Alignment.center,
+                                          alignment: menuItemsAlignment,
                                           margin:
                                               const EdgeInsets.only(bottom: 1),
                                           color: item.backgroundColor ??
