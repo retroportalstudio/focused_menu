@@ -17,6 +17,8 @@ class FocusedMenuHolder extends StatefulWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
+  final double customLeftOffset;
+  final double customRightOffset;
   final Alignment menuItemsAlignment;
   final BorderRadius listViewBorderRadius;
 
@@ -37,6 +39,8 @@ class FocusedMenuHolder extends StatefulWidget {
       this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
+      this.customLeftOffset,
+      this.customRightOffset,
       this.menuItemsAlignment,
       this.listViewBorderRadius,
       this.openWithTap = false})
@@ -108,6 +112,8 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                     animateMenu: widget.animateMenuItems ?? true,
                     bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
                     menuOffset: widget.menuOffset ?? 0,
+                    customLeftOffset: widget.customLeftOffset,
+                    customRightOffset: widget.customRightOffset,
                     menuItemsAlignment: widget.menuItemsAlignment ?? Alignment.center,
                     listViewBorderRadius: widget.listViewBorderRadius,
                     setmenuHeight: setmenuHeight,
@@ -131,6 +137,8 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color blurBackgroundColor;
   final double bottomOffsetHeight;
   final double menuOffset;
+  final double customLeftOffset;
+  final double customRightOffset;
   final Alignment menuItemsAlignment;
   final BorderRadius listViewBorderRadius;
   final double setmenuHeight;
@@ -149,6 +157,8 @@ class FocusedMenuDetails extends StatelessWidget {
       @required this.menuWidth,
       this.bottomOffsetHeight,
       this.menuOffset,
+      this.customLeftOffset,
+      this.customRightOffset,
       @required this.menuItemsAlignment,
       this.listViewBorderRadius,
       this.setmenuHeight})
@@ -197,8 +207,8 @@ class FocusedMenuDetails extends StatelessWidget {
                 )),
             Positioned(
                 bottom: bottomOffset,
-                left: 10,
-                right: 0,
+                left: customLeftOffset ?? leftOffset,
+                right: customRightOffset,
                 child: Column(
                   children: [
                     AbsorbPointer(
