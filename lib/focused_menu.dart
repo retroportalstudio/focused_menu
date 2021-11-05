@@ -114,7 +114,8 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
                     menuOffset: widget.menuOffset ?? 0,
                     customLeftOffset: widget.customLeftOffset,
                     customRightOffset: widget.customRightOffset,
-                    menuItemsAlignment: widget.menuItemsAlignment ?? Alignment.center,
+                    menuItemsAlignment:
+                        widget.menuItemsAlignment ?? Alignment.center,
                     listViewBorderRadius: widget.listViewBorderRadius,
                     setmenuHeight: setmenuHeight,
                   ));
@@ -167,10 +168,8 @@ class FocusedMenuDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     final maxMenuHeight = setmenuHeight;
     final listHeight = menuItems.length * (itemExtent ?? 50.0);
-
     final maxMenuWidth = menuWidth ?? (size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
     final leftOffset = (childOffset.dx + maxMenuWidth) < size.width
@@ -180,13 +179,17 @@ class FocusedMenuDetails extends StatelessWidget {
             size.height - bottomOffsetHeight
         ? childOffset.dy + childSize.height + menuOffset
         : childOffset.dy - menuHeight - menuOffset;*/
-        var childpos = size.height - childOffset.dy - childSize.height;
-    final bottomOffset = childpos >
+    final childpos = size.height - childOffset.dy - childSize.height;
+    final itemsHeight = (menuItems.where((element) => element != null).length *
+            (itemExtent ?? 50.0) -
+        bottomOffsetHeight);
+    final bottomOffset = childpos > itemsHeight && !itemsHeight.isNegative
+        ? childpos -
             (menuItems.where((element) => element != null).length *
-                    (itemExtent ?? 50.0) - bottomOffsetHeight)
-        ? childpos - (menuItems.where((element) => element != null).length *
-                    (itemExtent ?? 50.0)) - bottomOffsetHeight
+                (itemExtent ?? 50.0)) -
+            bottomOffsetHeight
         : bottomOffsetHeight;
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
