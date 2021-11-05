@@ -198,7 +198,7 @@ class FocusedMenuDetails extends StatelessWidget {
             Positioned(
                 bottom: bottomOffset,
                 left: 10,
-                right: 300,
+                right: 0,
                 child: Column(
                   children: [
                     AbsorbPointer(
@@ -219,6 +219,7 @@ class FocusedMenuDetails extends StatelessWidget {
                       },
                       tween: Tween(begin: 0.0, end: 1.0),
                       child: Container(
+                        alignment: menuItemsAlignment,
                         width: maxMenuWidth,
                         decoration: menuBoxDecoration ??
                             BoxDecoration(
