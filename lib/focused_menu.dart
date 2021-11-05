@@ -197,7 +197,8 @@ class FocusedMenuDetails extends StatelessWidget {
                 )),
             Positioned(
                 bottom: bottomOffset,
-                left: leftOffset,
+                left: 10,
+                right: 0,
                 child: Column(
                   children: [
                     AbsorbPointer(
