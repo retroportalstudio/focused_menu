@@ -197,8 +197,7 @@ class FocusedMenuDetails extends StatelessWidget {
                 )),
             Positioned(
                 bottom: bottomOffset,
-                left: 10,
-                right: 0,
+                left: leftOffset,
                 child: Column(
                   children: [
                     AbsorbPointer(
@@ -213,7 +212,7 @@ class FocusedMenuDetails extends StatelessWidget {
                       builder: (BuildContext context, value, Widget child) {
                         return Transform.scale(
                           scale: value,
-                          alignment: Alignment.center,
+                          alignment: menuItemsAlignment,
                           child: child,
                         );
                       },
