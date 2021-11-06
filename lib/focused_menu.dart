@@ -180,7 +180,8 @@ class FocusedMenuDetails extends StatelessWidget {
     final childpos = size.height - childOffset.dy - childSize.height;
     final itemsHeight = (menuItems.where((element) => element != null).length *
             (itemExtent ?? 50.0) +
-        bottomOffsetHeight);
+        bottomOffsetHeight +
+        10);
     final bottomOffset = childpos > itemsHeight && !itemsHeight.isNegative
         ? childpos - itemsHeight
         : bottomOffsetHeight;
