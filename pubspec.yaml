@@ -1,6 +1,6 @@
 name: focused_menu
 description: This is an easy to implement package for adding Focused Long Press Menu to Flutter Applications
-version: 1.0.5
+version: 1.0.5+1
 homepage: https://github.com/retroportalstudio/focused_menu.git
 
 environment:

@@ -1,3 +1,9 @@
+## [1.0.5+1] - Aug 19,2022 By @FlutterDev6778
+
+- Added new attributes`isSpace` in FocusedMenuItem and changed trailingIcon from Icon to Widget.
+
+* Fixed Null-Safety related Issue
+
 ## [1.0.5] - March 13,2021
 
 * Fixed Null-Safety related Issue
