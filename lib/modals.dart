@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 class FocusedMenuItem {
+  bool isSpace;
   Color? backgroundColor;
-  Widget title;
-  Icon? trailingIcon;
-  Function onPressed;
+  Widget? title;
+  Widget? trailingIcon;
+  Function? onPressed;
 
-  FocusedMenuItem(
-      {this.backgroundColor,
-      required this.title,
-      this.trailingIcon,
-      required this.onPressed});
+  FocusedMenuItem({
+    this.isSpace = false,
+    this.backgroundColor,
+    this.title,
+    this.trailingIcon,
+    this.onPressed,
+  });
 }
