@@ -32,7 +32,7 @@ class FocusedMenuHolder extends StatefulWidget {
   final List<FocusedMenuItem> menuItems;
   final bool? animateMenuItems;
   final BoxDecoration? menuBoxDecoration;
-  final Function onPressed;
+  final Function? onPressed;
   final Duration? duration;
   final double? blurSize;
   final Color? blurBackgroundColor;
@@ -48,6 +48,7 @@ class FocusedMenuHolder extends StatefulWidget {
       required this.child,
       required this.onPressed,
       required this.menuItems,
+      this.onPressed,
       this.duration,
       this.menuBoxDecoration,
       this.menuItemExtent,
@@ -93,7 +94,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
     return GestureDetector(
         key: containerKey,
         onTap: () async {
-          widget.onPressed();
+          widget.onPressed?.call();
           if (widget.openWithTap) {
             await openMenu(context);
           }
