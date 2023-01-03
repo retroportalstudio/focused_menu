@@ -23,7 +23,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  FocusedMenuHolderController _avatarController = FocusedMenuHolderController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,81 +50,118 @@ class MyHomePage extends StatelessWidget {
                   ),
                   Expanded(child: Center()),
                   IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
-                  CircleAvatar(
-                    child: Image.asset("assets/images/dp_default.png"),
+                  FocusedMenuHolder(
+                    controller: _avatarController,
+                    onPressed: () {},
+                    menuItems: <FocusedMenuItem>[
+                      FocusedMenuItem(
+                        title: Text("This is a button"),
+                        trailingIcon: Icon(Icons.open_in_new),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ScreenTwo(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                    child: CircleAvatar(
+                      child: Image.asset("assets/images/dp_default.png"),
+                    ),
                   )
                 ],
               ),
               SizedBox(
                 height: 10,
               ),
+              ElevatedButton(
+                onPressed: () => _avatarController.open(),
+                child: Text('Open avatar menu'),
+              ),
               TextField(
-                decoration: InputDecoration(border: InputBorder.none, hintText: "Look for your Interest!", fillColor: Colors.grey.shade200, filled: true),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Look for your Interest!",
+                  fillColor: Colors.grey.shade200,
+                  filled: true,
+                ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  DropdownButton(
-                      style: TextStyle(fontSize: 15, color: Colors.black),
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      underline: Container(
-                        color: Colors.white,
-                      ),
-                      items: ["Featured", "Most Rated", "Recent", "Popular"].map<DropdownMenuItem>((e) => DropdownMenuItem(child: Text(e))).toList(),
-                      onChanged: (newItem) {}),
-                  IconButton(icon: Icon(Icons.sort), onPressed: () {})
-                ],
-              ),
+              SizedBox(height: 10),
               SizedBox(
                 height: 10,
               ),
               Expanded(
                 child: GridView(
                   physics: BouncingScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
                   children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                       .map((e) => FocusedMenuHolder(
-                        menuWidth: MediaQuery.of(context).size.width*0.50,
-                        blurSize: 5.0,
-                        menuItemExtent: 45,
-                        menuBoxDecoration: BoxDecoration(color: Colors.grey,borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                        duration: Duration(milliseconds: 100),
-                        animateMenuItems: true,
-                        blurBackgroundColor: Colors.black54,
-                        bottomOffsetHeight: 100,
-                        openWithTap: true,
-                        menuItems: <FocusedMenuItem>[
-                          FocusedMenuItem(title: Text("Open"),trailingIcon: Icon(Icons.open_in_new) ,onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ScreenTwo()));
-                          }),
-                          FocusedMenuItem(title: Text("Share"),trailingIcon: Icon(Icons.share) ,onPressed: (){}),
-                          FocusedMenuItem(title: Text("Favorite"),trailingIcon: Icon(Icons.favorite_border) ,onPressed: (){}),
-                          FocusedMenuItem(title: Text("Delete",style: TextStyle(color: Colors.redAccent),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,) ,onPressed: (){}),
-                        ],
-                        onPressed: (){},
-                        child: Card(
+                            menuWidth: MediaQuery.of(context).size.width * 0.50,
+                            blurSize: 5.0,
+                            menuItemExtent: 45,
+                            menuBoxDecoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            duration: Duration(milliseconds: 100),
+                            animateMenuItems: true,
+                            blurBackgroundColor: Colors.black54,
+                            bottomOffsetHeight: 100,
+                            openWithTap: true,
+                            menuItems: <FocusedMenuItem>[
+                              FocusedMenuItem(
+                                  title: Text("Open"),
+                                  trailingIcon: Icon(Icons.open_in_new),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ScreenTwo()));
+                                  }),
+                              FocusedMenuItem(
+                                  title: Text("Share"),
+                                  trailingIcon: Icon(Icons.share),
+                                  onPressed: () {}),
+                              FocusedMenuItem(
+                                  title: Text("Favorite"),
+                                  trailingIcon: Icon(Icons.favorite_border),
+                                  onPressed: () {}),
+                              FocusedMenuItem(
+                                  title: Text(
+                                    "Delete",
+                                    style: TextStyle(color: Colors.redAccent),
+                                  ),
+                                  trailingIcon: Icon(
+                                    Icons.delete,
+                                    color: Colors.redAccent,
+                                  ),
+                                  onPressed: () {}),
+                            ],
+                            onPressed: () {},
+                            child: Card(
                               child: Column(
                                 children: <Widget>[
                                   Image.asset("assets/images/image_$e.jpg"),
                                 ],
                               ),
                             ),
-                      ))
+                          ))
                       .toList(),
                 ),
               ),
             ],
           ),
         )),
-        bottomNavigationBar: BottomNavigationBar(items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 2"),
-          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 3"),
-          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 4"),
-          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 5"),
+        bottomNavigationBar:
+            BottomNavigationBar(items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 2"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 3"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 4"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 5"),
         ]),
       ),
     );
