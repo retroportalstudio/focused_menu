@@ -1,26 +1,27 @@
 library focused_menu;
 
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:focused_menu/modals.dart';
 
 class FocusedMenuHolderController {
   late _FocusedMenuHolderState _widgetState;
-  bool isOpened = false;
+  bool _isOpened = false;
 
   void _addState(_FocusedMenuHolderState widgetState) {
     this._widgetState = widgetState;
   }
 
-  open() {
+  void open() {
     _widgetState.openMenu(_widgetState.context);
-    isOpened = true;
+    _isOpened = true;
   }
 
-  close() {
-    if (isOpened) {
+  void close() {
+    if (_isOpened) {
       Navigator.pop(_widgetState.context);
-      isOpened = false;
+      _isOpened = false;
     }
   }
 }
@@ -46,7 +47,6 @@ class FocusedMenuHolder extends StatefulWidget {
   const FocusedMenuHolder(
       {Key? key,
       required this.child,
-      required this.onPressed,
       required this.menuItems,
       this.onPressed,
       this.duration,
@@ -67,7 +67,6 @@ class FocusedMenuHolder extends StatefulWidget {
 }
 
 class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
-  FocusedMenuHolderController? _controller;
   GlobalKey containerKey = GlobalKey();
   Offset childOffset = Offset(0, 0);
   Size? childSize;
