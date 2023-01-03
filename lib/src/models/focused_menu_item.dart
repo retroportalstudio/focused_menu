@@ -6,9 +6,10 @@ class FocusedMenuItem {
   Icon? trailingIcon;
   Function onPressed;
 
-  FocusedMenuItem(
-      {this.backgroundColor,
-      required this.title,
-      this.trailingIcon,
-      required this.onPressed});
+  FocusedMenuItem({
+    this.backgroundColor,
+    required this.title,
+    this.trailingIcon,
+    required this.onPressed,
+  });
 }
