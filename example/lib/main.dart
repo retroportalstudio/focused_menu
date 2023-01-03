@@ -21,7 +21,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  FocusedMenuHolderController _avatarController = FocusedMenuHolderController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,12 +47,32 @@ class MyHomePage extends StatelessWidget {
                   ),
                   Expanded(child: Center()),
                   IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
-                  CircleAvatar(
-                    child: Image.asset("assets/images/dp_default.png"),
+                  FocusedMenuHolder(
+                    controller: _avatarController,
+                    onPressed: () {},
+                    menuItems: <FocusedMenuItem>[
+                      FocusedMenuItem(
+                        title: Text("This is a button"),
+                        trailingIcon: Icon(Icons.open_in_new),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ScreenTwo(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                    child: CircleAvatar(
+                      child: Image.asset("assets/images/dp_default.png"),
+                    ),
                   )
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(
+                height: 10,
+              ),
               TextField(
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -54,8 +81,27 @@ class MyHomePage extends StatelessWidget {
                   filled: true,
                 ),
               ),
-              SizedBox(height: 10),
-              Flexible(
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  DropdownButton(
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      underline: Container(
+                        color: Colors.white,
+                      ),
+                      items: ["Featured", "Most Rated", "Recent", "Popular"].map<DropdownMenuItem>((e) => DropdownMenuItem(child: Text(e))).toList(),
+                      onChanged: (newItem) {}),
+                  IconButton(icon: Icon(Icons.sort), onPressed: () {})
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
                 child: GridView(
                   physics: BouncingScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -117,7 +163,14 @@ class MyHomePage extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        )),
+        bottomNavigationBar: BottomNavigationBar(items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 2"),
+          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 3"),
+          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 4"),
+          BottomNavigationBarItem(icon: Icon(Icons.add),label: "Menu 5"),
+        ]),
       ),
     );
   }
