@@ -1,6 +1,7 @@
 import 'package:example/ScreenTwo.dart';
 import 'package:flutter/material.dart';
-import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/src/widgets/focus_menu_holder.dart';
+import 'package:focused_menu/src/models/focused_menu_item.dart';
 
 void main() {
   runApp(MyApp());
@@ -53,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   menuItems: <FocusedMenuItem>[
                     FocusedMenuItem(
                       title: Text("This is a button"),
-                      trailing: Icon(Icons.open_in_new),
+                      trailingIcon: Icon(Icons.open_in_new),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -108,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           menuItems: <FocusedMenuItem>[
                             FocusedMenuItem(
                                 title: Text("Open"),
-                                trailing: Icon(Icons.open_in_new),
+                                trailingIcon: Icon(Icons.open_in_new),
                                 onPressed: () {
                                   Navigator.push(
                                       context,
@@ -117,18 +118,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                 }),
                             FocusedMenuItem(
                                 title: Text("Share"),
-                                trailing: Icon(Icons.share),
+                                trailingIcon: Icon(Icons.share),
                                 onPressed: () {}),
                             FocusedMenuItem(
                                 title: Text("Favorite"),
-                                trailing: Icon(Icons.favorite_border),
+                                trailingIcon: Icon(Icons.favorite_border),
                                 onPressed: () {}),
                             FocusedMenuItem(
                                 title: Text(
                                   "Delete",
                                   style: TextStyle(color: Colors.redAccent),
                                 ),
-                                trailing: Icon(
+                                trailingIcon: Icon(
                                   Icons.delete,
                                   color: Colors.redAccent,
                                 ),
