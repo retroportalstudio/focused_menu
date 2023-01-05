@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   menuItems: <FocusedMenuItem>[
                     FocusedMenuItem(
                       title: Text("This is a button"),
-                      trailingIcon: Icon(Icons.open_in_new),
+                      trailing: Icon(Icons.open_in_new),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           menuItems: <FocusedMenuItem>[
                             FocusedMenuItem(
                                 title: Text("Open"),
-                                trailingIcon: Icon(Icons.open_in_new),
+                                trailing: Icon(Icons.open_in_new),
                                 onPressed: () {
                                   Navigator.push(
                                       context,
@@ -117,18 +117,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                 }),
                             FocusedMenuItem(
                                 title: Text("Share"),
-                                trailingIcon: Icon(Icons.share),
+                                trailing: Icon(Icons.share),
                                 onPressed: () {}),
                             FocusedMenuItem(
                                 title: Text("Favorite"),
-                                trailingIcon: Icon(Icons.favorite_border),
+                                trailing: Icon(Icons.favorite_border),
                                 onPressed: () {}),
                             FocusedMenuItem(
                                 title: Text(
                                   "Delete",
                                   style: TextStyle(color: Colors.redAccent),
                                 ),
-                                trailingIcon: Icon(
+                                trailing: Icon(
                                   Icons.delete,
                                   color: Colors.redAccent,
                                 ),
