@@ -120,8 +120,8 @@ class FocusedMenuDetails extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       item.title,
-                                      if (item.trailingIcon != null) ...[
-                                        item.trailingIcon!
+                                      if (item.trailing != null) ...[
+                                        item.trailing!
                                       ]
                                     ],
                                   ),
