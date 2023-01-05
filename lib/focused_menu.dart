@@ -2,7 +2,7 @@ library focused_menu;
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:focused_menu/modals.dart';
+import 'package:focused_menu/src/models/focused_menu_item.dart';
 export 'src/models/models.dart';
 
 class FocusedMenuHolder extends StatefulWidget {
