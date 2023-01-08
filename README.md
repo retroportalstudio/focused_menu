@@ -75,6 +75,8 @@ FocusedMenuHolder(
   menuItemExtent: 60,
   menuWidth: 200,
   openWithTap: true,
+  onOpened: () => print('Opened'),
+  onClosed: () => print('onClosed'),
   onPressed: () {},
   menuItems: <FocusedMenuItem>[
     FocusedMenuItem(
