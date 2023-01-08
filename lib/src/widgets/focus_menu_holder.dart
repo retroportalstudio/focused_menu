@@ -40,24 +40,28 @@ class FocusedMenuHolder extends StatefulWidget {
   /// Open with tap insted of long press.
   final bool openWithTap;
   final FocusedMenuHolderController? controller;
+  final VoidCallback? onOpened;
+  final VoidCallback? onClosed;
 
-  const FocusedMenuHolder(
-      {Key? key,
-      required this.child,
-      required this.menuItems,
-      this.onPressed,
-      this.duration,
-      this.menuBoxDecoration,
-      this.menuItemExtent,
-      this.animateMenuItems,
-      this.blurSize,
-      this.blurBackgroundColor,
-      this.menuWidth,
-      this.bottomOffsetHeight,
-      this.menuOffset,
-      this.openWithTap = false,
-      this.controller})
-      : super(key: key);
+  const FocusedMenuHolder({
+    Key? key,
+    required this.child,
+    required this.menuItems,
+    this.onPressed,
+    this.duration,
+    this.menuBoxDecoration,
+    this.menuItemExtent,
+    this.animateMenuItems,
+    this.blurSize,
+    this.blurBackgroundColor,
+    this.menuWidth,
+    this.bottomOffsetHeight,
+    this.menuOffset,
+    this.openWithTap = false,
+    this.controller,
+    this.onOpened,
+    this.onClosed,
+  }) : super(key: key);
 
   @override
   _FocusedMenuHolderState createState() => _FocusedMenuHolderState(controller);
@@ -105,6 +109,8 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
 
   Future openMenu(BuildContext context) async {
     _getOffset();
+    widget.onOpened?.call();
+
     await Navigator.push(
       context,
       PageRouteBuilder(
@@ -112,25 +118,26 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
         pageBuilder: (context, animation, secondaryAnimation) {
           animation = Tween(begin: 0.0, end: 1.0).animate(animation);
           return FadeTransition(
-              opacity: animation,
-              child: FocusedMenuDetails(
-                itemExtent: widget.menuItemExtent,
-                menuBoxDecoration: widget.menuBoxDecoration,
-                child: widget.child,
-                childOffset: childOffset,
-                childSize: childSize,
-                menuItems: widget.menuItems,
-                blurSize: widget.blurSize,
-                menuWidth: widget.menuWidth,
-                blurBackgroundColor: widget.blurBackgroundColor,
-                animateMenu: widget.animateMenuItems ?? true,
-                bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
-                menuOffset: widget.menuOffset ?? 0,
-              ));
+            opacity: animation,
+            child: FocusedMenuDetails(
+              itemExtent: widget.menuItemExtent,
+              menuBoxDecoration: widget.menuBoxDecoration,
+              child: widget.child,
+              childOffset: childOffset,
+              childSize: childSize,
+              menuItems: widget.menuItems,
+              blurSize: widget.blurSize,
+              menuWidth: widget.menuWidth,
+              blurBackgroundColor: widget.blurBackgroundColor,
+              animateMenu: widget.animateMenuItems ?? true,
+              bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
+              menuOffset: widget.menuOffset ?? 0,
+            ),
+          );
         },
         fullscreenDialog: true,
         opaque: false,
       ),
-    );
+    ).whenComplete(() => widget.onClosed?.call());
   }
 }
