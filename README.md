@@ -15,8 +15,11 @@
 
 This is an easy to implement package for adding Focused Menu to Flutter Applications
 
-![](https://github.com/retroportalstudio/focused_menu/blob/master/example/repo_files/focused_menu.gif)
-![](https://github.com/retroportalstudio/focused_menu/blob/master/example/repo_files/using-controller.gif)
+
+<p float="center">
+  <img src="https://github.com/retroportalstudio/focused_menu/blob/master/example/repo_files/focused_menu.gif?raw=true" width="400" />
+  <img src="https://github.com/retroportalstudio/focused_menu/blob/master/example/repo_files/using-controller.gif?raw=true" width="400" /> 
+</p>
 
 ---
 
