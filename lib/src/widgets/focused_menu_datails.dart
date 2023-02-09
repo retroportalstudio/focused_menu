@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:focused_menu/src/models/focused_menu_item.dart';
+import 'package:focused_menu/src/models/toolbar_button_item.dart';
 
 class FocusedMenuDetails extends StatelessWidget {
   final List<FocusedMenuItem> menuItems;
@@ -16,6 +17,8 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
+  final List<ToolbarButtonItem>? toolbarButtons;
+  final bool enableMenuScroll;
 
   const FocusedMenuDetails(
       {Key? key,
@@ -29,8 +32,10 @@ class FocusedMenuDetails extends StatelessWidget {
       required this.blurSize,
       required this.blurBackgroundColor,
       required this.menuWidth,
+      required this.enableMenuScroll,
       this.bottomOffsetHeight,
-      this.menuOffset})
+      this.menuOffset,
+      this.toolbarButtons})
       : super(key: key);
 
   @override
@@ -99,7 +104,7 @@ class FocusedMenuDetails extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: menuItems.length,
                       padding: EdgeInsets.zero,
-                      physics: BouncingScrollPhysics(),
+                      physics: enableMenuScroll ? BouncingScrollPhysics() : NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         FocusedMenuItem item = menuItems[index];
                         Widget listItem = GestureDetector(
@@ -147,6 +152,7 @@ class FocusedMenuDetails extends StatelessWidget {
                 ),
               ),
             ),
+            bottomToolbarWidget(size, toolbarButtons),
             Positioned(
                 top: childOffset.dy,
                 left: childOffset.dx,
@@ -161,4 +167,40 @@ class FocusedMenuDetails extends StatelessWidget {
       ),
     );
   }
+
+  //Add toolbar to bottom of page
+   Widget bottomToolbarWidget(Size size, List<ToolbarButtonItem>? toolbarButtons) {
+     if (toolbarButtons != null) {
+       return Positioned(
+         child: Container(
+           color: Colors.white,
+           width: size.width,
+           height: 75,
+           alignment: Alignment.topLeft,
+           child: _getButtons(toolbarButtons),
+         ),
+         bottom: 0,
+       );
+     }
+     return Container();
+   }
+
+   Widget _getButtons(List<ToolbarButtonItem> toolbarButtons) {
+     List<Widget> list = [];
+     list.add(new SizedBox(
+       width: 30,
+     ));
+     for (var i = 0; i < toolbarButtons.length; i++) {
+       list.add(new IconButton(
+         onPressed: toolbarButtons[i].onPressed,
+         icon: toolbarButtons[i].buttonIcon,
+         iconSize: 30.0,
+         color: toolbarButtons[i].buttonIconColor,
+       ));
+       list.add(new SizedBox(
+         width: 15,
+       ));
+     }
+     return new Row(children: list);
+   }
 }
