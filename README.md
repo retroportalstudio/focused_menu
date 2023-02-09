@@ -19,6 +19,7 @@ This is an easy to implement package for adding Focused Menu to Flutter Applicat
 <p float="center">
   <img src="https://github.com/retroportalstudio/focused_menu/blob/master/example/repo_files/focused_menu.gif?raw=true" width="400" />
   <img src="https://github.com/retroportalstudio/focused_menu/blob/master/example/repo_files/using-controller.gif?raw=true" width="400" /> 
+  <img src="https://github.com/retroportalstudio/focused_menu/blob/master/example/repo_files/bottomToolbar.gif?raw=true" width="400" />
 </p>
 
 ---
@@ -75,6 +76,11 @@ FocusedMenuHolder(
   menuItemExtent: 60,
   menuWidth: 200,
   openWithTap: true,
+  enableMenuScroll: false,
+  toolbarButtons: [
+    ToolbarButtonItem(buttonIcon: Icon(Icons.delete,), onPressed: () {}, buttonIconColor: Colors.red),
+    ToolbarButtonItem(buttonIcon: Icon(Icons.share), onPressed: () {}, buttonIconColor: Colors.blue),
+  ],
   onOpened: () => print('Opened'),
   onClosed: () => print('onClosed'),
   onPressed: () {},
