@@ -1,10 +1,10 @@
-## Description of Changes Made ##
+## Description of Changes Made
 
-** What has changed? **
+#### What has changed?
 
-** Why is this change needed **
+#### Why is this change needed
 
-** Screenshots & Videos **
+#### Screenshots & Videos
 
 <!-- Upload screenshots here
 
