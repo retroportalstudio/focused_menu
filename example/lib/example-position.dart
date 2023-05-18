@@ -25,7 +25,8 @@ class ExamplePosition extends StatelessWidget {
 
             /// Bottom left (default)
             MenuItemContainer(
-              text: 'Bottom left (default)',
+              text: 'Bottom left',
+              description: 'default',
               backgroundColor: Colors.blue[600],
             ),
 
@@ -40,13 +41,22 @@ class ExamplePosition extends StatelessWidget {
 
             SizedBox(height: 14),
 
+            /// Bottom center
+            MenuItemContainer(
+              text: 'Bottom center',
+              align: Alignment.bottomCenter,
+              backgroundColor: Colors.blue[600],
+            ),
+
+            SizedBox(height: 14),
+
             /// Top left
             MenuItemContainer(
               text: 'Top left',
               description:
                   'The menu should be opened to the top left. If the menu cannot be fully displayed, it will be opened to the bottom left.',
               align: Alignment.topLeft,
-              backgroundColor: Colors.blue[800],
+              backgroundColor: Colors.deepPurple[500],
             ),
 
             SizedBox(height: 14),
@@ -57,7 +67,16 @@ class ExamplePosition extends StatelessWidget {
               description:
                   'The menu should be opened to the top right. If the menu cannot be fully displayed, it will be opened to the bottom right.',
               align: Alignment.topRight,
-              backgroundColor: Colors.blue[900],
+              backgroundColor: Colors.deepPurple[700],
+            ),
+
+            SizedBox(height: 14),
+
+            /// Bottom center
+            MenuItemContainer(
+              text: 'Top center',
+              align: Alignment.topCenter,
+              backgroundColor: Colors.deepPurple[900],
             ),
 
             SizedBox(height: 14),
@@ -95,6 +114,7 @@ class MenuItemContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FocusedMenuHolder(
+      openWithTap: true,
       menuWidth: MediaQuery.of(context).size.width * 0.50,
       blurSize: 5.0,
       menuItemExtent: 45,

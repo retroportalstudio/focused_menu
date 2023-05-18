@@ -44,10 +44,18 @@ class FocusedMenuDetails extends StatelessWidget {
 
     final maxMenuWidth = menuWidth ?? (size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
+
+    final horizontalCenterOffset =
+        align == Alignment.bottomCenter || align == Alignment.topCenter
+            ? (childSize!.width / 2) - (maxMenuWidth / 2)
+            : 0;
     final leftOffset = (childOffset.dx + maxMenuWidth) < size.width &&
             (align == null || align!.x < 1.0)
-        ? childOffset.dx
-        : (childOffset.dx - maxMenuWidth + childSize!.width);
+        ? childOffset.dx + horizontalCenterOffset
+        : (childOffset.dx -
+            maxMenuWidth +
+            childSize!.width +
+            horizontalCenterOffset);
 
     final topOffset = (childOffset.dy - menuHeight - menuOffset! >= 0)
         ? (childOffset.dy + menuHeight + childSize!.height) <
@@ -57,7 +65,6 @@ class FocusedMenuDetails extends StatelessWidget {
             : childOffset.dy - menuHeight - menuOffset!
         : childOffset.dy + childSize!.height + menuOffset!;
 
-    print(topOffset);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
