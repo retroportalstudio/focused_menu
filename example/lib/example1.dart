@@ -88,6 +88,17 @@ class _Example1State extends State<Example1> {
                                   color: Colors.redAccent,
                                 ),
                                 onPressed: () {}),
+                            FocusedMenuItem(
+                                closeOnTap: false,
+                                title: Text(
+                                  "Menu stays open",
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                                trailing: Icon(
+                                  Icons.whatshot,
+                                  color: Colors.blue,
+                                ),
+                                onPressed: () {}),
                           ],
                           onPressed: () {},
                           child: Card(
