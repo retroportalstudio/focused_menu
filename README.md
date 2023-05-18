@@ -1,61 +1,106 @@
-# Focused Menu
+<h2 align="center"> Flutter widget to create focused menu easily 🚀 </h2>
 
-This is an easy to implement package for adding Focused Long Press Menu to Flutter Applications
+<p align="center">
+  <a href="https://pub.dev/packages/focused_menu"><img src="https://img.shields.io/pub/v/focused_menu.svg" alt="Pub"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://github.com/retroportalstudio/focused_menu"><img src="https://img.shields.io/github/stars/retroportalstudio/focused_menu?style=social" alt="Pub"></a>
+</p>
+<p align="center">
+  <a href="https://pub.dev/packages/focused_menu/score"><img src="https://img.shields.io/pub/likes/focused_menu?logo=flutter" alt="Pub likes"></a>
+  <a href="https://pub.dev/packages/focused_menu/score"><img src="https://img.shields.io/pub/popularity/focused_menu?logo=flutter" alt="Pub popularity"></a>
+  <a href="https://pub.dev/packages/focused_menu/score"><img src="https://img.shields.io/pub/points/focused_menu?logo=flutter" alt="Pub points"></a>
+</p>
 
-## Current Features
+---
 
-* Add Focused Menu to Any Widget you Want
-* Customizations to change The Focused Menu and Animations according to your Application Needs.
+This is an easy to implement package for adding Focused Menu to Flutter Applications
 
-## Demo
-![](https://github.com/retroportalstudio/focused_menu/blob/master/focused_menu.gif)
 
+<p float="center">
+  <img src="https://github.com/retroportalstudio/focused_menu/blob/master/example/repo_files/focused_menu.gif?raw=true" width="400" />
+  <img src="https://github.com/retroportalstudio/focused_menu/blob/master/example/repo_files/using-controller.gif?raw=true" width="400" /> 
+</p>
+
+---
+
+## Getting Started
+Fist install the dependency
+
+### Add dependency
+
+```yaml
+dependencies:
+  focused_menu: CURRENT_VERSION
+```
+
+### Import package
+
+```dart
+import 'package:focused_menu/focused_menu.dart';
+```
 ## Usage
 To Use, simply Wrap the Widget you want to add Focused Menu to, with FocusedMenuHolder:
 ```dart
-              Expanded(
-                child: GridView(
-                  physics: BouncingScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                  children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-
-                       // Wrap each item (Card) with Focused Menu Holder
-                      .map((e) => FocusedMenuHolder(
-                        menuWidth: MediaQuery.of(context).size.width*0.50,
-                        blurSize: 5.0,
-                        menuItemExtent: 45,
-                        menuBoxDecoration: BoxDecoration(color: Colors.grey,borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                        duration: Duration(milliseconds: 100),
-                        animateMenuItems: true,
-                        blurBackgroundColor: Colors.black54,
-                        openWithTap: true, // Open Focused-Menu on Tap rather than Long Press
-                        menuOffset: 10.0, // Offset value to show menuItem from the selected item
-                        bottomOffsetHeight: 80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
-                        menuItems: <FocusedMenuItem>[
-                          // Add Each FocusedMenuItem  for Menu Options
-                          FocusedMenuItem(title: Text("Open"),trailingIcon: Icon(Icons.open_in_new) ,onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ScreenTwo()));
-                          }),
-                          FocusedMenuItem(title: Text("Share"),trailingIcon: Icon(Icons.share) ,onPressed: (){}),
-                          FocusedMenuItem(title: Text("Favorite"),trailingIcon: Icon(Icons.favorite_border) ,onPressed: (){}),
-                          FocusedMenuItem(title: Text("Delete",style: TextStyle(color: Colors.redAccent),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,) ,onPressed: (){}),
-                        ],
-                        onPressed: (){},
-                        child: Card(
-                              child: Column(
-                                children: <Widget>[
-                                  Image.asset("assets/images/image_$e.jpg"),
-                                ],
-                              ),
-                            ),
-                      ))
-                      .toList(),
-                ),
-              ),
+FocusedMenuHolder(
+  menuItems: <FocusedMenuItem>[
+    FocusedMenuItem(
+      title: Text("This is a button"),
+      trailing: Icon(Icons.open_in_new),
+      onPressed: () {},
+    ),
+  ],
+  child: CircleAvatar(
+    child: Image.asset("assets/images/dp_default.png"),
+  ),
+),
 ```
 
-## Roadmap
-Plans to add more customizations.
+---
+
+## Customizations
+
+In order to customize your focused menu you can change any of the available attributes
+
+```dart
+FocusedMenuHolder(
+  menuOffset: 0,
+  controller: _avatarController,
+  animateMenuItems: true,
+  blurBackgroundColor: Colors.pink,
+  blurSize: 20,
+  bottomOffsetHeight: 20,
+  duration: Duration(milliseconds: 500),
+  menuBoxDecoration:
+      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+  menuItemExtent: 60,
+  menuWidth: 200,
+  openWithTap: true,
+  onOpened: () => print('Opened'),
+  onClosed: () => print('onClosed'),
+  onPressed: () {},
+  menuItems: <FocusedMenuItem>[
+    FocusedMenuItem(
+      backgroundColor: Colors.green,
+      title: Text("This is a button"),
+      trailing: Icon(Icons.open_in_new),
+      onPressed: () {},
+    ),
+  ],
+  child: CircleAvatar(
+    child: Image.asset("assets/images/dp_default.png"),
+  ),
+),
+```
+
+<br>
+<div align="center" >
+  <p>Thanks to all contributors</p>
+  <a href="https://github.com/retroportalstudio/focused_menu/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=retroportalstudio/focused_menu" />
+  </a>
+</div>
+<br>
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
