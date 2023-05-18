@@ -42,6 +42,7 @@ class FocusedMenuHolder extends StatefulWidget {
   final FocusedMenuHolderController? controller;
   final VoidCallback? onOpened;
   final VoidCallback? onClosed;
+  final Alignment? align;
 
   const FocusedMenuHolder({
     Key? key,
@@ -58,6 +59,7 @@ class FocusedMenuHolder extends StatefulWidget {
     this.bottomOffsetHeight,
     this.menuOffset,
     this.openWithTap = false,
+    this.align,
     this.controller,
     this.onOpened,
     this.onClosed,
@@ -132,6 +134,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
               animateMenu: widget.animateMenuItems ?? true,
               bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
               menuOffset: widget.menuOffset ?? 0,
+              align: widget.align,
             ),
           );
         },
