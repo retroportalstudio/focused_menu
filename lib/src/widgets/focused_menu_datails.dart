@@ -16,22 +16,24 @@ class FocusedMenuDetails extends StatelessWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
+  final Alignment? align;
 
-  const FocusedMenuDetails(
-      {Key? key,
-      required this.menuItems,
-      required this.child,
-      required this.childOffset,
-      required this.childSize,
-      required this.menuBoxDecoration,
-      required this.itemExtent,
-      required this.animateMenu,
-      required this.blurSize,
-      required this.blurBackgroundColor,
-      required this.menuWidth,
-      this.bottomOffsetHeight,
-      this.menuOffset})
-      : super(key: key);
+  const FocusedMenuDetails({
+    Key? key,
+    required this.menuItems,
+    required this.child,
+    required this.childOffset,
+    required this.childSize,
+    required this.menuBoxDecoration,
+    required this.itemExtent,
+    required this.animateMenu,
+    required this.blurSize,
+    required this.blurBackgroundColor,
+    required this.menuWidth,
+    this.bottomOffsetHeight,
+    this.menuOffset,
+    this.align,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +44,20 @@ class FocusedMenuDetails extends StatelessWidget {
 
     final maxMenuWidth = menuWidth ?? (size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
-    final leftOffset = (childOffset.dx + maxMenuWidth) < size.width
+    final leftOffset = (childOffset.dx + maxMenuWidth) < size.width &&
+            (align == null || align!.x < 1.0)
         ? childOffset.dx
         : (childOffset.dx - maxMenuWidth + childSize!.width);
-    final topOffset = (childOffset.dy + menuHeight + childSize!.height) <
-            size.height - bottomOffsetHeight!
-        ? childOffset.dy + childSize!.height + menuOffset!
-        : childOffset.dy - menuHeight - menuOffset!;
+
+    final topOffset = (childOffset.dy - menuHeight - menuOffset! >= 0)
+        ? (childOffset.dy + menuHeight + childSize!.height) <
+                    size.height - bottomOffsetHeight! &&
+                (align == null || align!.y == 1.0)
+            ? childOffset.dy + childSize!.height + menuOffset!
+            : childOffset.dy - menuHeight - menuOffset!
+        : childOffset.dy + childSize!.height + menuOffset!;
+
+    print(topOffset);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
