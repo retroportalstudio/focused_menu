@@ -104,7 +104,9 @@ class FocusedMenuDetails extends StatelessWidget {
                         FocusedMenuItem item = menuItems[index];
                         Widget listItem = GestureDetector(
                             onTap: () {
-                              Navigator.pop(context);
+                              if (item.closeOnTap == true) {
+                                Navigator.pop(context);
+                              }
                               item.onPressed();
                             },
                             child: Container(
