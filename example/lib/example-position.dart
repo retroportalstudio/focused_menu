@@ -16,7 +16,7 @@ class ExamplePosition extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Text(
-                'Long press on the card to open the menu:',
+                'Tap on the card to open the menu:',
                 style: TextStyle(
                   fontSize: 18,
                 ),
