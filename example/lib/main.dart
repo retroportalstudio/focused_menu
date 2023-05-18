@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   const HomePage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
