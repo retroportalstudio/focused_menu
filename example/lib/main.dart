@@ -1,3 +1,4 @@
+import 'package:example/example-position.dart';
 import 'package:example/example1.dart';
 import 'package:example/example2.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   const HomePage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -62,6 +63,14 @@ class HomePage extends StatelessWidget {
                 );
               },
               child: Text('Controller Example'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => ExamplePosition()),
+                );
+              },
+              child: Text('Positionned Example'),
             ),
           ],
         ),

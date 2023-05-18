@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 
 class Example2 extends StatefulWidget {
-  const Example2({Key key}) : super(key: key);
+  const Example2({Key? key}) : super(key: key);
 
   @override
   State<Example2> createState() => _Example2State();
