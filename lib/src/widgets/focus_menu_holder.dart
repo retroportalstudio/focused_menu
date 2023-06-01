@@ -37,6 +37,10 @@ class FocusedMenuHolder extends StatefulWidget {
   final double? bottomOffsetHeight;
   final double? menuOffset;
 
+  /// If true, the menu will be opened in the root navigator. Use it only if you are using multiple navigators.
+  /// Default is false.
+  final bool rootNavitator;
+
   /// Open with tap insted of long press.
   final bool openWithTap;
   final FocusedMenuHolderController? controller;
@@ -57,6 +61,7 @@ class FocusedMenuHolder extends StatefulWidget {
     this.menuWidth,
     this.bottomOffsetHeight,
     this.menuOffset,
+    this.rootNavitator = false,
     this.openWithTap = false,
     this.controller,
     this.onOpened,
@@ -111,33 +116,34 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
     _getOffset();
     widget.onOpened?.call();
 
-    await Navigator.push(
-      context,
-      PageRouteBuilder(
-        transitionDuration: widget.duration ?? Duration(milliseconds: 100),
-        pageBuilder: (context, animation, secondaryAnimation) {
-          animation = Tween(begin: 0.0, end: 1.0).animate(animation);
-          return FadeTransition(
-            opacity: animation,
-            child: FocusedMenuDetails(
-              itemExtent: widget.menuItemExtent,
-              menuBoxDecoration: widget.menuBoxDecoration,
-              child: widget.child,
-              childOffset: childOffset,
-              childSize: childSize,
-              menuItems: widget.menuItems,
-              blurSize: widget.blurSize,
-              menuWidth: widget.menuWidth,
-              blurBackgroundColor: widget.blurBackgroundColor,
-              animateMenu: widget.animateMenuItems ?? true,
-              bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
-              menuOffset: widget.menuOffset ?? 0,
-            ),
-          );
-        },
-        fullscreenDialog: true,
-        opaque: false,
-      ),
-    ).whenComplete(() => widget.onClosed?.call());
+    await Navigator.of(context, rootNavigator: widget.rootNavitator)
+        .push(
+          PageRouteBuilder(
+            transitionDuration: widget.duration ?? Duration(milliseconds: 100),
+            pageBuilder: (context, animation, secondaryAnimation) {
+              animation = Tween(begin: 0.0, end: 1.0).animate(animation);
+              return FadeTransition(
+                opacity: animation,
+                child: FocusedMenuDetails(
+                  itemExtent: widget.menuItemExtent,
+                  menuBoxDecoration: widget.menuBoxDecoration,
+                  child: widget.child,
+                  childOffset: childOffset,
+                  childSize: childSize,
+                  menuItems: widget.menuItems,
+                  blurSize: widget.blurSize,
+                  menuWidth: widget.menuWidth,
+                  blurBackgroundColor: widget.blurBackgroundColor,
+                  animateMenu: widget.animateMenuItems ?? true,
+                  bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
+                  menuOffset: widget.menuOffset ?? 0,
+                ),
+              );
+            },
+            fullscreenDialog: true,
+            opaque: false,
+          ),
+        )
+        .whenComplete(() => widget.onClosed?.call());
   }
 }
