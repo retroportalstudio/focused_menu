@@ -4,8 +4,8 @@ import 'package:focused_menu/src/models/models.dart';
 final _defaultBoxDecoration = BoxDecoration(
   color: Colors.grey.shade200,
   borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-  boxShadow: [
-    const BoxShadow(color: Colors.black38, blurRadius: 10, spreadRadius: 1)
+  boxShadow: const [
+    BoxShadow(color: Colors.black38, blurRadius: 10, spreadRadius: 1)
   ],
 );
 
@@ -39,8 +39,8 @@ class FocusedMenuWidget extends StatelessWidget {
       top: topOffset,
       left: leftOffset,
       child: TweenAnimationBuilder(
-        duration: Duration(milliseconds: 200),
-        builder: (BuildContext context, dynamic value, Widget? child) {
+        duration: const Duration(milliseconds: 200),
+        builder: (BuildContext context, double value, Widget? child) {
           return Transform.scale(
             scale: value,
             alignment: Alignment.center,
@@ -58,8 +58,8 @@ class FocusedMenuWidget extends StatelessWidget {
               itemCount: menuItems.length,
               padding: EdgeInsets.zero,
               physics: enableMenuScroll
-                  ? BouncingScrollPhysics()
-                  : NeverScrollableScrollPhysics(),
+                  ? const BouncingScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 FocusedMenuItem item = menuItems[index];
                 Widget listItem = GestureDetector(
@@ -85,7 +85,7 @@ class FocusedMenuWidget extends StatelessWidget {
                         )));
                 if (animateMenu) {
                   return TweenAnimationBuilder(
-                      builder: (context, dynamic value, child) {
+                      builder: (context, double value, child) {
                         return Transform(
                           transform: Matrix4.rotationX(1.5708 * value),
                           alignment: Alignment.bottomCenter,

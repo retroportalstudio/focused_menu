@@ -47,70 +47,51 @@ class _Example1State extends State<Example1> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
                 children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-                    .map((e) => FocusedMenuHolder(
-                          menuWidth: MediaQuery.of(context).size.width * 0.50,
-                          blurSize: 5.0,
-                          menuItemExtent: 45,
-                          menuBoxDecoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0))),
-                          duration: Duration(milliseconds: 100),
-                          animateMenuItems: true,
-                          blurBackgroundColor: Colors.black54,
-                          bottomOffsetHeight: 100,
-                          openWithTap: false,
-                          enableMenuScroll: false,
-                          toolbarActions: [
-                            IconButton(
-                                icon: Icon(
-                                  Icons.delete,
-                                ),
-                                onPressed: () {},
-                                color: Colors.red),
-                            IconButton(
-                                icon: Icon(Icons.share),
-                                onPressed: () {},
-                                color: Colors.blue),
-                          ],
-                          menuItems: <FocusedMenuItem>[
-                            FocusedMenuItem(
-                                title: Text("Open"),
-                                trailing: Icon(Icons.open_in_new),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ScreenTwo()));
-                                }),
-                            FocusedMenuItem(
-                                title: Text("Share"),
-                                trailing: Icon(Icons.share),
-                                onPressed: () {}),
-                            FocusedMenuItem(
-                                title: Text("Favorite"),
-                                trailing: Icon(Icons.favorite_border),
-                                onPressed: () {}),
-                            FocusedMenuItem(
-                                title: Text(
-                                  "Delete",
-                                  style: TextStyle(color: Colors.redAccent),
-                                ),
-                                trailing: Icon(
-                                  Icons.delete,
-                                  color: Colors.redAccent,
-                                ),
-                                onPressed: () {}),
-                          ],
-                          onPressed: () {},
-                          child: Card(
-                            child: Column(
-                              children: <Widget>[
-                                Image.asset("assets/images/image_$e.jpg"),
-                              ],
-                            ),
+                    .map(
+                      (e) => FocusedMenuHolder(
+                        animateMenuItems: false,
+                        blurBackgroundColor: Colors.black,
+                        openWithTap: false,
+                        enableMenuScroll: false,
+                        menuItems: <FocusedMenuItem>[
+                          FocusedMenuItem(
+                              title: Text("Open"),
+                              trailing: Icon(Icons.open_in_new),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute<Widget>(
+                                        builder: (context) => ScreenTwo()));
+                              }),
+                          FocusedMenuItem(
+                              title: Text("Share"),
+                              trailing: Icon(Icons.share),
+                              onPressed: () {}),
+                          FocusedMenuItem(
+                              title: Text("Favorite"),
+                              trailing: Icon(Icons.favorite_border),
+                              onPressed: () {}),
+                          FocusedMenuItem(
+                              title: Text(
+                                "Delete",
+                                style: TextStyle(color: Colors.redAccent),
+                              ),
+                              trailing: Icon(
+                                Icons.delete,
+                                color: Colors.redAccent,
+                              ),
+                              onPressed: () {}),
+                        ],
+                        onPressed: () {},
+                        child: Card(
+                          child: Column(
+                            children: <Widget>[
+                              Image.asset("assets/images/image_$e.jpg"),
+                            ],
                           ),
-                        ))
+                        ),
+                      ),
+                    )
                     .toList(),
               ),
             ),

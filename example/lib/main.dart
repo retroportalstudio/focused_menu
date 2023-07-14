@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Example1()),
+                  MaterialPageRoute<Example1>(builder: (context) => Example1()),
                 );
               },
               child: Text('OnTap Example'),
@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Example2()),
+                  MaterialPageRoute<Example2>(builder: (context) => Example2()),
                 );
               },
               child: Text('Controller Example'),

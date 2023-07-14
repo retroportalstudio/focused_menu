@@ -180,7 +180,7 @@ class _FocusedChild extends StatelessWidget {
       left: childOffset.dx,
       child: AbsorbPointer(
         absorbing: true,
-        child: Container(
+        child: SizedBox(
           width: childSize!.width,
           height: childSize!.height,
           child: child,

@@ -98,17 +98,18 @@ class FocusedMenuHolder extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _FocusedMenuHolderState createState() => _FocusedMenuHolderState(controller);
+  // ignore: no_logic_in_create_state
+  State createState() => _FocusedMenuHolderState(controller);
 }
 
 class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
-  GlobalKey _containerKey = GlobalKey();
-  Offset _childOffset = Offset(0, 0);
+  final GlobalKey _containerKey = GlobalKey();
+  Offset _childOffset = const Offset(0, 0);
   Size? _childSize;
 
-  _FocusedMenuHolderState(FocusedMenuHolderController? _controller) {
-    if (_controller != null) {
-      _controller._addState(this);
+  _FocusedMenuHolderState(FocusedMenuHolderController? controller) {
+    if (controller != null) {
+      controller._addState(this);
     }
   }
 
@@ -119,7 +120,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
     Offset offset = renderBox.localToGlobal(Offset.zero);
 
     setState(() {
-      this._childOffset = Offset(offset.dx, offset.dy);
+      _childOffset = Offset(offset.dx, offset.dy);
       _childSize = size;
     });
   }
@@ -142,14 +143,15 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
         child: widget.child);
   }
 
-  Future openMenu(BuildContext context) async {
+  Future<void> openMenu(BuildContext context) async {
     _getOffset();
     widget.onOpened?.call();
 
     await Navigator.push(
       context,
-      PageRouteBuilder(
-        transitionDuration: widget.duration ?? Duration(milliseconds: 100),
+      PageRouteBuilder<Widget>(
+        transitionDuration:
+            widget.duration ?? const Duration(milliseconds: 100),
         pageBuilder: (context, animation, secondaryAnimation) {
           animation = Tween(begin: 0.0, end: 1.0).animate(animation);
           return FadeTransition(
@@ -157,7 +159,6 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
             child: FocusedMenuDetails(
               itemExtent: widget.menuItemExtent,
               menuBoxDecoration: widget.menuBoxDecoration,
-              child: widget.child,
               childOffset: _childOffset,
               childSize: _childSize,
               menuItems: widget.menuItems,
@@ -169,6 +170,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
               menuOffset: widget.menuOffset ?? 0,
               toolbarActions: widget.toolbarActions,
               enableMenuScroll: widget.enableMenuScroll,
+              child: widget.child,
             ),
           );
         },
@@ -187,7 +189,7 @@ class FocusedMenuHolderController {
   bool _isOpened = false;
 
   void _addState(_FocusedMenuHolderState widgetState) {
-    this._widgetState = widgetState;
+    _widgetState = widgetState;
   }
 
   void open() {
