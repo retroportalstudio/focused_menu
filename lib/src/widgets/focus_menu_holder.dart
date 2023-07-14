@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:focused_menu/src/models/focused_menu_item.dart';
-import 'package:focused_menu/src/models/toolbar_button_item.dart';
 import 'package:focused_menu/src/widgets/focused_menu_datails.dart';
 
 class FocusedMenuHolderController {
@@ -37,8 +36,11 @@ class FocusedMenuHolder extends StatefulWidget {
   final Color? blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
-  //use bottom toolbar menu if not null
-  final List<ToolbarButtonItem>? toolbarButtons;
+
+  /// Actions to be shown in the toolbar.
+  final List<Widget>? toolbarActions;
+
+  /// Enable scroll in menu. Default is true.
   final bool enableMenuScroll;
 
   /// Open with tap insted of long press.
@@ -61,7 +63,7 @@ class FocusedMenuHolder extends StatefulWidget {
     this.menuWidth,
     this.bottomOffsetHeight,
     this.menuOffset,
-    this.toolbarButtons,
+    this.toolbarActions,
     this.enableMenuScroll = true,
     this.openWithTap = false,
     this.controller,
@@ -138,7 +140,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
               animateMenu: widget.animateMenuItems ?? true,
               bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
               menuOffset: widget.menuOffset ?? 0,
-              toolbarButtons: widget.toolbarButtons,
+              toolbarActions: widget.toolbarActions,
               enableMenuScroll: widget.enableMenuScroll,
             ),
           );
