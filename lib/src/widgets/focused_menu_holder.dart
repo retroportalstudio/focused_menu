@@ -2,51 +2,77 @@ import 'package:flutter/material.dart';
 import 'package:focused_menu/src/models/focused_menu_item.dart';
 import 'package:focused_menu/src/widgets/focused_menu_datails.dart';
 
-class FocusedMenuHolderController {
-  late _FocusedMenuHolderState _widgetState;
-  bool _isOpened = false;
-
-  void _addState(_FocusedMenuHolderState widgetState) {
-    this._widgetState = widgetState;
-  }
-
-  void open() {
-    _widgetState.openMenu(_widgetState.context);
-    _isOpened = true;
-  }
-
-  void close() {
-    if (_isOpened) {
-      Navigator.pop(_widgetState.context);
-      _isOpened = false;
-    }
-  }
-}
-
+/// {@macro focused_menu_holder}
+///
+/// This widget is used to controll the animation of the menu
+/// when showing and hiding the [FocusedMenuDetails].
 class FocusedMenuHolder extends StatefulWidget {
+  /// The widget that will be used as the child.
+  ///
+  /// This is the widget that will be used as the anchor for the menu.
   final Widget child;
+
+  /// {@macro focused_menu_holder.menuItems}
   final double? menuItemExtent;
+
+  /// {@macro focused_menu_holder.menuWidth}
   final double? menuWidth;
+
+  /// {@macro focused_menu_holder.menuItems}
   final List<FocusedMenuItem> menuItems;
+
+  /// {@macro focused_menu_holder.animateMenuItems}
   final bool? animateMenuItems;
+
+  /// {@macro focused_menu_holder.menuBoxDecoration}
   final BoxDecoration? menuBoxDecoration;
+
+  /// Callback to be called when the child is pressed.
   final Function? onPressed;
+
+  /// Duration of the animation.
+  ///
+  /// Defaults to 100 milliseconds.
   final Duration? duration;
+
+  /// {@macro focused_menu_details.blurSize}
   final double? blurSize;
+
+  /// {@macro focused_menu_details.blurBackgroundColor}
   final Color? blurBackgroundColor;
+
+  /// {@macro focused_menu_details.bottomOffsetHeight}
   final double? bottomOffsetHeight;
+
+  /// {@macro focused_menu_details.menuOffset}
   final double? menuOffset;
 
-  /// Actions to be shown in the toolbar.
+  /// {@macro focused_menu_details.toolbarActions}
   final List<Widget>? toolbarActions;
 
-  /// Enable scroll in menu. Default is true.
+  /// {@macro focused_menu_details.enableMenuScroll}
   final bool enableMenuScroll;
 
+  /// {@macro focused_menu_details.openWithTap}
+  ///
   /// Open with tap insted of long press.
+  ///
+  /// Default to false.
   final bool openWithTap;
+
+  /// Controller to extend the functionality of the menu.
+  ///
+  /// You can use this controller to open or close the menu programatically
   final FocusedMenuHolderController? controller;
+
+  /// {@macro focused_menu_details.onOpened}
+  ///
+  /// Callback to be called when the menu is opened.
   final VoidCallback? onOpened;
+
+  /// {@macro focused_menu_details.onClosed}
+  ///
+  /// Callback to be called when the menu is closed.
   final VoidCallback? onClosed;
 
   const FocusedMenuHolder({
@@ -76,9 +102,9 @@ class FocusedMenuHolder extends StatefulWidget {
 }
 
 class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
-  GlobalKey containerKey = GlobalKey();
-  Offset childOffset = Offset(0, 0);
-  Size? childSize;
+  GlobalKey _containerKey = GlobalKey();
+  Offset _childOffset = Offset(0, 0);
+  Size? _childSize;
 
   _FocusedMenuHolderState(FocusedMenuHolderController? _controller) {
     if (_controller != null) {
@@ -88,19 +114,20 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
 
   void _getOffset() {
     RenderBox renderBox =
-        containerKey.currentContext!.findRenderObject() as RenderBox;
+        _containerKey.currentContext!.findRenderObject() as RenderBox;
     Size size = renderBox.size;
     Offset offset = renderBox.localToGlobal(Offset.zero);
+
     setState(() {
-      this.childOffset = Offset(offset.dx, offset.dy);
-      childSize = size;
+      this._childOffset = Offset(offset.dx, offset.dy);
+      _childSize = size;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        key: containerKey,
+        key: _containerKey,
         onTap: () async {
           widget.onPressed?.call();
           if (widget.openWithTap) {
@@ -131,8 +158,8 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
               itemExtent: widget.menuItemExtent,
               menuBoxDecoration: widget.menuBoxDecoration,
               child: widget.child,
-              childOffset: childOffset,
-              childSize: childSize,
+              childOffset: _childOffset,
+              childSize: _childSize,
               menuItems: widget.menuItems,
               blurSize: widget.blurSize,
               menuWidth: widget.menuWidth,
@@ -149,5 +176,29 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
         opaque: false,
       ),
     ).whenComplete(() => widget.onClosed?.call());
+  }
+}
+
+/// Controller to extend the functionality of the menu.
+///
+/// You can use this controller to open or close the menu programatically
+class FocusedMenuHolderController {
+  late _FocusedMenuHolderState _widgetState;
+  bool _isOpened = false;
+
+  void _addState(_FocusedMenuHolderState widgetState) {
+    this._widgetState = widgetState;
+  }
+
+  void open() {
+    _widgetState.openMenu(_widgetState.context);
+    _isOpened = true;
+  }
+
+  void close() {
+    if (_isOpened) {
+      Navigator.pop(_widgetState.context);
+      _isOpened = false;
+    }
   }
 }
