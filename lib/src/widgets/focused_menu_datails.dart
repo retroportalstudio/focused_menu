@@ -111,6 +111,58 @@ class FocusedMenuDetails extends StatelessWidget {
     this.toolbarActions,
   }) : super(key: key);
 
+  double _getLeftOffset(Size screenSize) {
+    // Calculate the maximum width of the menu.
+    // This is either provided or defaults to 70% of the screen width.
+    final maxMenuWidth = menuWidth ?? (screenSize.width * 0.70);
+
+    // Calculate the potential new left offset by adding maxMenuWidth
+    // to child's horizontal distance.
+    final potentialLeftOffset = childOffset.dx + maxMenuWidth;
+
+    // Check if the potential left offset fits within the screen width.
+    bool doesOffsetFitWithinScreenWidth =
+        potentialLeftOffset < screenSize.width;
+
+    // Calculate the overflow offset when the potential left offset doesn't
+    // fit within the screen width.
+    final overflowOffset = childOffset.dx - maxMenuWidth + childSize!.width;
+
+    // The final left offset is either the child's horizontal distance or
+    // the overflow offset,  depending on whether the potential left offset
+    // fits the screen width.
+    final leftOffset =
+        doesOffsetFitWithinScreenWidth ? childOffset.dx : overflowOffset;
+
+    return leftOffset;
+  }
+
+  double _getTopOffset(Size screenSize, double menuHeight) {
+    // Calculate the potential top offset by adding menuHeight and child's 
+    // height to child's vertical distance.
+    final potentialTopOffset = childOffset.dy + menuHeight + childSize!.height;
+
+    // Calculate the threshold for the top offset, which is the screen height 
+    // minus the bottom offset height.
+    final topOffsetThreshold = screenSize.height - bottomOffsetHeight!;
+
+    // Check if the potential top offset is less than the threshold.
+    bool doesOffsetFitWithinScreenHeight =
+        potentialTopOffset < topOffsetThreshold;
+
+    // Calculate the overflow offset when the potential top offset doesn't fit 
+    // within the screen height.
+    final overflowOffset = childOffset.dy - menuHeight - menuOffset!;
+
+    // The final top offset is either the new offset or the overflow offset, 
+    // depending on whether the potential top offset fits within the screen height.
+    final topOffset = doesOffsetFitWithinScreenHeight
+        ? childOffset.dy + childSize!.height + menuOffset!
+        : overflowOffset;
+
+    return topOffset;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -120,13 +172,9 @@ class FocusedMenuDetails extends StatelessWidget {
 
     final maxMenuWidth = menuWidth ?? (size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
-    final leftOffset = (childOffset.dx + maxMenuWidth) < size.width
-        ? childOffset.dx
-        : (childOffset.dx - maxMenuWidth + childSize!.width);
-    final topOffset = (childOffset.dy + menuHeight + childSize!.height) <
-            size.height - bottomOffsetHeight!
-        ? childOffset.dy + childSize!.height + menuOffset!
-        : childOffset.dy - menuHeight - menuOffset!;
+
+    final leftOffset = _getLeftOffset(size);
+    final topOffset = _getTopOffset(size, menuHeight);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
