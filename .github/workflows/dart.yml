@@ -18,7 +18,7 @@ jobs:
           - "3.7.0"
 
     steps:
-        - uses: actions/checkout@v3.1
+        - uses: actions/checkout@v3.1.0
         - uses: subosito/flutter-action@v2.7.1
           with:
            flutter-version: ${{ matrix.flutter-version }}
