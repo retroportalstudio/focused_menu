@@ -13,65 +13,71 @@ class _Example1State extends State<Example1> {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Music Albums",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-                Expanded(child: Center()),
-                IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
-              ],
-            ),
-            SizedBox(height: 10),
-            TextField(
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Look for your Interest!",
-                fillColor: Colors.grey.shade200,
-                filled: true,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "Music Albums",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  Expanded(child: Center()),
+                  IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
+                ],
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: GridView(
-                physics: BouncingScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-                    .map(
-                      (e) => FocusedMenuHolder(
-                        animateMenuItems: false,
-                        blurBackgroundColor: Colors.black,
-                        openWithTap: false,
-                        enableMenuScroll: false,
-                        menuItems: <FocusedMenuItem>[
-                          FocusedMenuItem(
+              SizedBox(height: 10),
+              TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Look for your Interest!",
+                  fillColor: Colors.grey.shade200,
+                  filled: true,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: GridView(
+                  physics: BouncingScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                      .map(
+                        (e) => FocusedMenuHolder(
+                          animateMenuItems: false,
+                          blurBackgroundColor: Colors.black,
+                          openWithTap: false,
+                          enableMenuScroll: false,
+                          menuItems: <FocusedMenuItem>[
+                            FocusedMenuItem(
                               title: Text("Open"),
                               trailing: Icon(Icons.open_in_new),
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute<Widget>(
-                                        builder: (context) => ScreenTwo()));
-                              }),
-                          FocusedMenuItem(
+                                  context,
+                                  MaterialPageRoute<Widget>(
+                                    builder: (context) => ScreenTwo(),
+                                  ),
+                                );
+                              },
+                            ),
+                            FocusedMenuItem(
                               title: Text("Share"),
                               trailing: Icon(Icons.share),
-                              onPressed: () {}),
-                          FocusedMenuItem(
+                              onPressed: () {},
+                            ),
+                            FocusedMenuItem(
                               title: Text("Favorite"),
                               trailing: Icon(Icons.favorite_border),
-                              onPressed: () {}),
-                          FocusedMenuItem(
+                              onPressed: () {},
+                            ),
+                            FocusedMenuItem(
                               title: Text(
                                 "Delete",
                                 style: TextStyle(color: Colors.redAccent),
@@ -80,31 +86,35 @@ class _Example1State extends State<Example1> {
                                 Icons.delete,
                                 color: Colors.redAccent,
                               ),
-                              onPressed: () {}),
-                        ],
-                        onPressed: () {},
-                        child: Card(
-                          child: Column(
-                            children: <Widget>[
-                              Image.asset("assets/images/image_$e.jpg"),
-                            ],
+                              onPressed: () {},
+                            ),
+                          ],
+                          onPressed: () {},
+                          child: Card(
+                            child: Column(
+                              children: <Widget>[
+                                Image.asset("assets/images/image_$e.jpg"),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                    .toList(),
+                      )
+                      .toList(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      )),
-      bottomNavigationBar: BottomNavigationBar(items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.add), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 2"),
-        BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 3"),
-        BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 4"),
-        BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 5"),
-      ]),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 2"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 3"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 4"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Menu 5"),
+        ],
+      ),
     );
   }
 }

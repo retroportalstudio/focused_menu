@@ -128,19 +128,20 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        key: _containerKey,
-        onTap: () async {
-          widget.onPressed?.call();
-          if (widget.openWithTap) {
-            await openMenu(context);
-          }
-        },
-        onLongPress: () async {
-          if (!widget.openWithTap) {
-            await openMenu(context);
-          }
-        },
-        child: widget.child);
+      key: _containerKey,
+      onTap: () async {
+        widget.onPressed?.call();
+        if (widget.openWithTap) {
+          await openMenu(context);
+        }
+      },
+      onLongPress: () async {
+        if (!widget.openWithTap) {
+          await openMenu(context);
+        }
+      },
+      child: widget.child,
+    );
   }
 
   Future<void> openMenu(BuildContext context) async {

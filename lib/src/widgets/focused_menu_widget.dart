@@ -63,38 +63,43 @@ class FocusedMenuWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 FocusedMenuItem item = menuItems[index];
                 Widget listItem = GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      item.onPressed();
-                    },
-                    child: Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(bottom: 1),
-                        color: item.backgroundColor ?? Colors.white,
-                        height: itemExtent ?? 50.0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 14),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              item.title,
-                              if (item.trailing != null) ...[item.trailing!]
-                            ],
-                          ),
-                        )));
+                  onTap: () {
+                    Navigator.pop(context);
+                    item.onPressed();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(bottom: 1),
+                    color: item.backgroundColor ?? Colors.white,
+                    height: itemExtent ?? 50.0,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8.0,
+                        horizontal: 14,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          item.title,
+                          if (item.trailing != null) ...[item.trailing!]
+                        ],
+                      ),
+                    ),
+                  ),
+                );
                 if (animateMenu) {
                   return TweenAnimationBuilder(
-                      builder: (context, double value, child) {
-                        return Transform(
-                          transform: Matrix4.rotationX(1.5708 * value),
-                          alignment: Alignment.bottomCenter,
-                          child: child,
-                        );
-                      },
-                      tween: Tween(begin: 1.0, end: 0.0),
-                      duration: Duration(milliseconds: index * 200),
-                      child: listItem);
+                    builder: (context, double value, child) {
+                      return Transform(
+                        transform: Matrix4.rotationX(1.5708 * value),
+                        alignment: Alignment.bottomCenter,
+                        child: child,
+                      );
+                    },
+                    tween: Tween(begin: 1.0, end: 0.0),
+                    duration: Duration(milliseconds: index * 200),
+                    child: listItem,
+                  );
                 } else {
                   return listItem;
                 }

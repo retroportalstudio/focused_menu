@@ -138,11 +138,11 @@ class FocusedMenuDetails extends StatelessWidget {
   }
 
   double _getTopOffset(Size screenSize, double menuHeight) {
-    // Calculate the potential top offset by adding menuHeight and child's 
+    // Calculate the potential top offset by adding menuHeight and child's
     // height to child's vertical distance.
     final potentialTopOffset = childOffset.dy + menuHeight + childSize!.height;
 
-    // Calculate the threshold for the top offset, which is the screen height 
+    // Calculate the threshold for the top offset, which is the screen height
     // minus the bottom offset height.
     final topOffsetThreshold = screenSize.height - bottomOffsetHeight!;
 
@@ -150,11 +150,11 @@ class FocusedMenuDetails extends StatelessWidget {
     bool doesOffsetFitWithinScreenHeight =
         potentialTopOffset < topOffsetThreshold;
 
-    // Calculate the overflow offset when the potential top offset doesn't fit 
+    // Calculate the overflow offset when the potential top offset doesn't fit
     // within the screen height.
     final overflowOffset = childOffset.dy - menuHeight - menuOffset!;
 
-    // The final top offset is either the new offset or the overflow offset, 
+    // The final top offset is either the new offset or the overflow offset,
     // depending on whether the potential top offset fits within the screen height.
     final topOffset = doesOffsetFitWithinScreenHeight
         ? childOffset.dy + childSize!.height + menuOffset!

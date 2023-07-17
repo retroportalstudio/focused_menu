@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 /// A widget that displays a row of actions in the toolbar.
 class ToolbarActions extends StatelessWidget {
-
   /// {@macro focused_menu_details.toolbarActions}
   final List<Widget> toolbarActions;
 
