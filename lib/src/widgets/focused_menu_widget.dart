@@ -16,11 +16,11 @@ class FocusedMenuWidget extends StatelessWidget {
     required this.leftOffset,
     required this.maxMenuWidth,
     required this.menuHeight,
-    required this.menuBoxDecoration,
     required this.menuItems,
-    required this.enableMenuScroll,
-    required this.itemExtent,
-    required this.animateMenu,
+    this.menuBoxDecoration,
+    this.enableMenuScroll,
+    this.itemExtent,
+    this.animateMenuItems,
   }) : super(key: key);
 
   final double topOffset;
@@ -29,9 +29,9 @@ class FocusedMenuWidget extends StatelessWidget {
   final double menuHeight;
   final BoxDecoration? menuBoxDecoration;
   final List<FocusedMenuItem> menuItems;
-  final bool enableMenuScroll;
+  final bool? enableMenuScroll;
   final double? itemExtent;
-  final bool animateMenu;
+  final bool? animateMenuItems;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class FocusedMenuWidget extends StatelessWidget {
             child: ListView.builder(
               itemCount: menuItems.length,
               padding: EdgeInsets.zero,
-              physics: enableMenuScroll
+              physics: enableMenuScroll ?? true
                   ? const BouncingScrollPhysics()
                   : const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
@@ -87,7 +87,7 @@ class FocusedMenuWidget extends StatelessWidget {
                     ),
                   ),
                 );
-                if (animateMenu) {
+                if (animateMenuItems ?? true) {
                   return TweenAnimationBuilder(
                     builder: (context, double value, child) {
                       return Transform(

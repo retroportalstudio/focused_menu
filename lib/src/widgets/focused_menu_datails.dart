@@ -40,7 +40,7 @@ class FocusedMenuDetails extends StatelessWidget {
   /// {@macro focused_menu_holder.animateMenuItems}
   ///
   /// Whether the menu items should be animated or not.
-  final bool animateMenu;
+  final bool? animateMenuItems;
 
   /// {@macro focused_menu_holder.menuWidth}
   ///
@@ -98,17 +98,17 @@ class FocusedMenuDetails extends StatelessWidget {
     required this.menuItems,
     required this.child,
     required this.childOffset,
-    required this.childSize,
-    required this.menuBoxDecoration,
-    required this.itemExtent,
-    required this.animateMenu,
-    required this.blurSize,
-    required this.blurBackgroundColor,
-    required this.menuWidth,
-    required this.enableMenuScroll,
+    this.childSize,
+    this.itemExtent,
+    this.blurSize,
+    this.blurBackgroundColor,
+    this.menuWidth,
+    this.menuBoxDecoration,
     this.bottomOffsetHeight,
     this.menuOffset,
     this.toolbarActions,
+    this.animateMenuItems,
+    this.enableMenuScroll = true,
   }) : super(key: key);
 
   double _getLeftOffset(Size screenSize) {
@@ -144,7 +144,7 @@ class FocusedMenuDetails extends StatelessWidget {
 
     // Calculate the threshold for the top offset, which is the screen height
     // minus the bottom offset height.
-    final topOffsetThreshold = screenSize.height - bottomOffsetHeight!;
+    final topOffsetThreshold = screenSize.height - (bottomOffsetHeight ?? 0);
 
     // Check if the potential top offset is less than the threshold.
     bool doesOffsetFitWithinScreenHeight =
@@ -152,12 +152,12 @@ class FocusedMenuDetails extends StatelessWidget {
 
     // Calculate the overflow offset when the potential top offset doesn't fit
     // within the screen height.
-    final overflowOffset = childOffset.dy - menuHeight - menuOffset!;
+    final overflowOffset = childOffset.dy - menuHeight - (menuOffset ?? 0);
 
     // The final top offset is either the new offset or the overflow offset,
     // depending on whether the potential top offset fits within the screen height.
     final topOffset = doesOffsetFitWithinScreenHeight
-        ? childOffset.dy + childSize!.height + menuOffset!
+        ? childOffset.dy + childSize!.height + (menuOffset ?? 0)
         : overflowOffset;
 
     return topOffset;
@@ -194,7 +194,7 @@ class FocusedMenuDetails extends StatelessWidget {
             menuItems: menuItems,
             enableMenuScroll: enableMenuScroll,
             itemExtent: itemExtent,
-            animateMenu: animateMenu,
+            animateMenuItems: animateMenuItems,
           ),
           if (toolbarActions != null)
             ToolbarActions(toolbarActions: toolbarActions!),

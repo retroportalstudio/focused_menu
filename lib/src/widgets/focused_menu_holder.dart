@@ -13,7 +13,7 @@ class FocusedMenuHolder extends StatefulWidget {
   final Widget child;
 
   /// {@macro focused_menu_holder.menuItems}
-  final double? menuItemExtent;
+  final double? itemExtent;
 
   /// {@macro focused_menu_holder.menuWidth}
   final double? menuWidth;
@@ -82,7 +82,7 @@ class FocusedMenuHolder extends StatefulWidget {
     this.onPressed,
     this.duration,
     this.menuBoxDecoration,
-    this.menuItemExtent,
+    this.itemExtent,
     this.animateMenuItems,
     this.blurSize,
     this.blurBackgroundColor,
@@ -158,7 +158,7 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
           return FadeTransition(
             opacity: animation,
             child: FocusedMenuDetails(
-              itemExtent: widget.menuItemExtent,
+              itemExtent: widget.itemExtent,
               menuBoxDecoration: widget.menuBoxDecoration,
               childOffset: _childOffset,
               childSize: _childSize,
@@ -166,9 +166,9 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
               blurSize: widget.blurSize,
               menuWidth: widget.menuWidth,
               blurBackgroundColor: widget.blurBackgroundColor,
-              animateMenu: widget.animateMenuItems ?? true,
-              bottomOffsetHeight: widget.bottomOffsetHeight ?? 0,
-              menuOffset: widget.menuOffset ?? 0,
+              animateMenuItems: widget.animateMenuItems,
+              bottomOffsetHeight: widget.bottomOffsetHeight,
+              menuOffset: widget.menuOffset,
               toolbarActions: widget.toolbarActions,
               enableMenuScroll: widget.enableMenuScroll,
               child: widget.child,
