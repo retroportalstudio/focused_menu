@@ -1,6 +1,9 @@
 name: Flutter tests
 
-on: push
+on:  
+  pull_request:
+    branches:
+      - master
 
 jobs:
   test:
@@ -15,25 +18,24 @@ jobs:
           - "3.7.0"
 
     steps:
-      - name: 📚 Git Checkout
-        uses: actions/checkout@v3.1.0
+        - uses: actions/checkout@v3.1
+        - uses: subosito/flutter-action@v2.7.1
+          with:
+           flutter-version: ${{ matrix.flutter-version }}
 
-      - name: 🐦 Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ matrix.flutter-version }}
+        - name: 📀 Add pub cache bin to PATH
+          run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+        - name: 📀 Add pub cache to PATH
+          run: echo "PUB_CACHE="$HOME/.pub-cache"" >> $GITHUB_ENV
 
-      - name: Install LCOV
-        run: sudo apt-get install -y lcov && dart pub global activate coverage
+        - name: 📦 Install dependencies
+          run: flutter pub get
 
-      - name: 📦 Install Dependencies (root)
-        run: flutter pub get
+        - name: 🧪 Format code
+          run: dart format lib test --set-exit-if-changed
 
-      - name: 🧪 Run Tests
-        run: flutter test --coverage
+        - name: 🧪 Analyze code
+          run: flutter analyze --no-current-package
 
-      - name: 📊 Collect coverage
-        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
-        with:
-          files: coverage/lcov.info
-          verbose: true
+        - name: 🧪 Run tests 
+          run: flutter test --coverage
