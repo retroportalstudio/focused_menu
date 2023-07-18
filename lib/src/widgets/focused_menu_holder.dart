@@ -102,16 +102,18 @@ class FocusedMenuHolder extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  // ignore: no_logic_in_create_state
-  State createState() => _FocusedMenuHolderState(controller);
+  State createState() => _FocusedMenuHolderState();
 }
 
 class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
   final GlobalKey _containerKey = GlobalKey();
 
-  _FocusedMenuHolderState(FocusedMenuHolderController? controller) {
-    if (controller != null) {
-      controller._addState(this);
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.controller != null) {
+      widget.controller!._addState(this);
     }
   }
 
@@ -188,10 +190,9 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
 
 /// Controller to extend the functionality of the menu.
 ///
-/// You can use this controller to open or close the menu programatically
+/// You can use this controller to open the menu programatically
 class FocusedMenuHolderController {
   late _FocusedMenuHolderState _widgetState;
-  bool _isOpened = false;
 
   void _addState(_FocusedMenuHolderState widgetState) {
     _widgetState = widgetState;
@@ -199,14 +200,6 @@ class FocusedMenuHolderController {
 
   void open() {
     _widgetState._openMenu();
-    _isOpened = true;
-  }
-
-  void close() {
-    if (_isOpened) {
-      Navigator.pop(_widgetState.context);
-      _isOpened = false;
-    }
   }
 }
 
