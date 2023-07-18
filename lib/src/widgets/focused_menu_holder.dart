@@ -55,10 +55,10 @@ class FocusedMenuHolder extends StatefulWidget {
 
   /// {@macro focused_menu_details.openWithTap}
   ///
-  /// Open with tap insted of long press.
+  /// Trigger for opening the menu.
   ///
-  /// Default to false.
-  final bool openWithTap;
+  /// Default to [OpenMode.onLongPress].
+  final OpenMode openMode;
 
   /// Controller to extend the functionality of the menu.
   ///
@@ -91,7 +91,7 @@ class FocusedMenuHolder extends StatefulWidget {
     this.menuOffset,
     this.toolbarActions,
     this.enableMenuScroll = true,
-    this.openWithTap = false,
+    this.openMode = OpenMode.onLongPress,
     this.controller,
     this.onOpened,
     this.onClosed,
@@ -112,10 +112,20 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
       controller._addState(this);
     }
   }
+  
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      key: _containerKey,
+      onTap: widget.openMode == OpenMode.onTap ? _openMenu : null,
+      onLongPress: widget.openMode == OpenMode.onLongPress ? _openMenu : null,
+      child: widget.child,
+    );
+  }
 
   void _getOffset() {
-    RenderBox renderBox =
-        _containerKey.currentContext!.findRenderObject() as RenderBox;
+    final cContext = _containerKey.currentContext;
+    RenderBox renderBox = cContext!.findRenderObject() as RenderBox;
     Size size = renderBox.size;
     Offset offset = renderBox.localToGlobal(Offset.zero);
 
@@ -125,27 +135,10 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      key: _containerKey,
-      onTap: () async {
-        widget.onPressed?.call();
-        if (widget.openWithTap) {
-          await openMenu(context);
-        }
-      },
-      onLongPress: () async {
-        if (!widget.openWithTap) {
-          await openMenu(context);
-        }
-      },
-      child: widget.child,
-    );
-  }
-
-  Future<void> openMenu(BuildContext context) async {
+  Future<void> _openMenu() async {
     _getOffset();
+
+    widget.onPressed?.call();
     widget.onOpened?.call();
 
     await Navigator.push(
@@ -194,7 +187,7 @@ class FocusedMenuHolderController {
   }
 
   void open() {
-    _widgetState.openMenu(_widgetState.context);
+    _widgetState._openMenu();
     _isOpened = true;
   }
 
@@ -205,3 +198,5 @@ class FocusedMenuHolderController {
     }
   }
 }
+
+enum OpenMode { onTap, onLongPress }

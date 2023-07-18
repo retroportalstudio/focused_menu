@@ -52,8 +52,8 @@ class _Example1State extends State<Example1> {
                         (e) => FocusedMenuHolder(
                           animateMenuItems: false,
                           blurBackgroundColor: Colors.black,
-                          openWithTap: false,
                           enableMenuScroll: false,
+                          openMode: OpenMode.onTap,
                           menuItems: <FocusedMenuItem>[
                             FocusedMenuItem(
                               title: Text("Open"),
