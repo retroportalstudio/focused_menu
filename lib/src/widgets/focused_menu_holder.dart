@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:focused_menu/src/models/focused_menu_item.dart';
 import 'package:focused_menu/src/widgets/focused_menu_datails.dart';
+
+const _duration = Duration(milliseconds: 100);
 
 /// {@macro focused_menu_holder}
 ///
@@ -104,15 +108,13 @@ class FocusedMenuHolder extends StatefulWidget {
 
 class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
   final GlobalKey _containerKey = GlobalKey();
-  Offset _childOffset = const Offset(0, 0);
-  Size? _childSize;
 
   _FocusedMenuHolderState(FocusedMenuHolderController? controller) {
     if (controller != null) {
       controller._addState(this);
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -123,38 +125,49 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
     );
   }
 
-  void _getOffset() {
+  RenderBox _getRenderBox() {
     final cContext = _containerKey.currentContext;
     RenderBox renderBox = cContext!.findRenderObject() as RenderBox;
-    Size size = renderBox.size;
-    Offset offset = renderBox.localToGlobal(Offset.zero);
 
-    setState(() {
-      _childOffset = Offset(offset.dx, offset.dy);
-      _childSize = size;
-    });
+    return renderBox;
   }
 
   Future<void> _openMenu() async {
-    _getOffset();
+    RenderBox renderBox = _getRenderBox();
+    Size size = renderBox.size;
+    Offset offset = renderBox.localToGlobal(Offset.zero);
+
+    final menuOffset = Offset(offset.dx, offset.dy);
+    final childSize = size;
 
     widget.onPressed?.call();
     widget.onOpened?.call();
 
-    await Navigator.push(
+    try {
+      await _show(menuOffset, childSize);
+    } catch (e, stack) {
+      log(e.toString(), stackTrace: stack);
+    }
+
+    widget.onClosed?.call();
+  }
+
+  Future<dynamic> _show(Offset offset, Size? size) async {
+    return Navigator.push(
       context,
-      PageRouteBuilder<Widget>(
-        transitionDuration:
-            widget.duration ?? const Duration(milliseconds: 100),
-        pageBuilder: (context, animation, secondaryAnimation) {
+      PageRouteBuilder(
+        transitionDuration: widget.duration ?? _duration,
+        fullscreenDialog: true,
+        opaque: false,
+        pageBuilder: (_, animation, __) {
           animation = Tween(begin: 0.0, end: 1.0).animate(animation);
           return FadeTransition(
             opacity: animation,
             child: FocusedMenuDetails(
               itemExtent: widget.itemExtent,
               menuBoxDecoration: widget.menuBoxDecoration,
-              childOffset: _childOffset,
-              childSize: _childSize,
+              childOffset: offset,
+              childSize: size,
               menuItems: widget.menuItems,
               blurSize: widget.blurSize,
               menuWidth: widget.menuWidth,
@@ -168,10 +181,8 @@ class _FocusedMenuHolderState extends State<FocusedMenuHolder> {
             ),
           );
         },
-        fullscreenDialog: true,
-        opaque: false,
       ),
-    ).whenComplete(() => widget.onClosed?.call());
+    );
   }
 }
 
