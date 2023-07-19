@@ -1,15 +1,9 @@
 <h2 align="center"> Flutter widget to create focused menu easily 🚀 </h2>
 
-<p align="center">
-  <a href="https://pub.dev/packages/focused_menu"><img src="https://img.shields.io/pub/v/focused_menu.svg" alt="Pub"></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
-  <a href="https://github.com/retroportalstudio/focused_menu"><img src="https://img.shields.io/github/stars/retroportalstudio/focused_menu?style=social" alt="Pub"></a>
-</p>
-<p align="center">
-  <a href="https://pub.dev/packages/focused_menu/score"><img src="https://img.shields.io/pub/likes/focused_menu?logo=flutter" alt="Pub likes"></a>
-  <a href="https://pub.dev/packages/focused_menu/score"><img src="https://img.shields.io/pub/popularity/focused_menu?logo=flutter" alt="Pub popularity"></a>
-  <a href="https://pub.dev/packages/focused_menu/score"><img src="https://img.shields.io/pub/points/focused_menu?logo=flutter" alt="Pub points"></a>
-</p>
+[![codecov](https://codecov.io/gh/retroportalstudio/focused_menu/branch/master/graph/badge.svg)](https://codecov.io/gh/retroportalstudio/focused_menu) <a href="https://pub.dev/packages/focused_menu"><img src="https://img.shields.io/pub/v/focused_menu.svg" alt="Pub"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a> <a href="https://github.com/retroportalstudio/focused_menu"><img src="https://img.shields.io/github/stars/retroportalstudio/focused_menu?style=social" alt="Pub"></a>
+
+
+<a href="https://pub.dev/packages/focused_menu/score"><img src="https://img.shields.io/pub/likes/focused_menu?logo=flutter" alt="Pub likes"></a> <a href="https://pub.dev/packages/focused_menu/score"><img src="https://img.shields.io/pub/popularity/focused_menu?logo=flutter" alt="Pub popularity"></a> <a href="https://pub.dev/packages/focused_menu/score"><img src="https://img.shields.io/pub/points/focused_menu?logo=flutter" alt="Pub points"></a>
 
 ---
 
