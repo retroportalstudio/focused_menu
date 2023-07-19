@@ -3,12 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/src/widgets/focused_menu_widget.dart';
 
+import '../../helpers/helpers.dart';
+
 void main() {
   testWidgets('FocusedMenuDetails should render correctly',
       (WidgetTester tester) async {
     // Arrange
     await tester.pumpWidget(
-      _HelperWidget(
+      HelperWidget(
         child: FocusedMenuHolder(
           menuItems: [
             FocusedMenuItem(
@@ -35,7 +37,7 @@ void main() {
       (WidgetTester tester) async {
     // Arrange
     await tester.pumpWidget(
-      _HelperWidget(
+      HelperWidget(
         child: FocusedMenuHolder(
           menuItems: [
             FocusedMenuItem(
@@ -69,7 +71,7 @@ void main() {
       (WidgetTester tester) async {
     // Arrange
     await tester.pumpWidget(
-      _HelperWidget(
+      HelperWidget(
         child: FocusedMenuHolder(
           menuOffset: 10,
           menuItems: [
@@ -98,14 +100,4 @@ void main() {
     expect(topLeftPositionOfMenuWidget.dx, 0);
     expect(topLeftPositionOfMenuWidget.dy, 24);
   });
-}
-
-class _HelperWidget extends StatelessWidget {
-  final Widget child;
-  const _HelperWidget({Key? key, required this.child}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: Scaffold(body: child));
-  }
 }
