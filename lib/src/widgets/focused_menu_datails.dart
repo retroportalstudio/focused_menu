@@ -8,13 +8,13 @@ class FocusedMenuDetails extends StatelessWidget {
   final List<FocusedMenuItem> menuItems;
   final BoxDecoration? menuBoxDecoration;
   final Offset childOffset;
-  final double? itemExtent;
-  final Size? childSize;
+  final double itemExtent;
+  final Size childSize;
   final Widget child;
   final bool animateMenu;
-  final double? blurSize;
+  final double blurSize;
   final double? menuWidth;
-  final Color? blurBackgroundColor;
+  final Color blurBackgroundColor;
   final double? bottomOffsetHeight;
   final double? menuOffset;
 
@@ -24,39 +24,61 @@ class FocusedMenuDetails extends StatelessWidget {
   /// Enable scroll in menu.
   final bool enableMenuScroll;
 
-  const FocusedMenuDetails(
-      {Key? key,
-      required this.menuItems,
-      required this.child,
-      required this.childOffset,
-      required this.childSize,
-      required this.menuBoxDecoration,
-      required this.itemExtent,
-      required this.animateMenu,
-      required this.blurSize,
-      required this.blurBackgroundColor,
-      required this.menuWidth,
-      required this.enableMenuScroll,
-      this.bottomOffsetHeight,
-      this.menuOffset,
-      this.toolbarActions})
-      : super(key: key);
+  /// The duration of the animation of the menu items. Default is 400ms.
+  final Duration showItemsDuration;
+
+  /// The border radius of the menu items card. Default is 0.0.
+  final BorderRadius itemsCardBorderRadius;
+
+  /// The widget to be used as seperator between menu items.
+  final Widget? itemSeperatorWidget;
+
+  final EdgeInsets itemPadding;
+
+  /// Delta Duration for each item animation. Default is 200ms.
+  final int itemAnimationDuration;
+
+  const FocusedMenuDetails({
+    Key? key,
+    required this.menuItems,
+    required this.child,
+    required this.childOffset,
+    required this.childSize,
+    required this.menuBoxDecoration,
+    this.itemExtent = 50.0,
+    required this.animateMenu,
+    required this.blurSize,
+    this.blurBackgroundColor = const Color.fromRGBO(0, 0, 0, 0.7),
+    required this.menuWidth,
+    required this.enableMenuScroll,
+    this.bottomOffsetHeight,
+    this.menuOffset,
+    this.toolbarActions,
+    this.showItemsDuration = const Duration(milliseconds: 400),
+    this.itemsCardBorderRadius = const BorderRadius.all(Radius.zero),
+    this.itemSeperatorWidget,
+    this.itemPadding = const EdgeInsets.symmetric(
+      vertical: 8.0,
+      horizontal: 14,
+    ),
+    this.itemAnimationDuration = 200,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     final maxMenuHeight = size.height * 0.45;
-    final listHeight = menuItems.length * (itemExtent ?? 50.0);
+    final listHeight = menuItems.length * (itemExtent);
 
     final maxMenuWidth = menuWidth ?? (size.width * 0.70);
     final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
     final leftOffset = (childOffset.dx + maxMenuWidth) < size.width
         ? childOffset.dx
-        : (childOffset.dx - maxMenuWidth + childSize!.width);
-    final topOffset = (childOffset.dy + menuHeight + childSize!.height) <
+        : (childOffset.dx - maxMenuWidth + childSize.width);
+    final topOffset = (childOffset.dy + menuHeight + childSize.height) <
             size.height - bottomOffsetHeight!
-        ? childOffset.dy + childSize!.height + menuOffset!
+        ? childOffset.dy + childSize.height + menuOffset!
         : childOffset.dy - menuHeight - menuOffset!;
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -70,17 +92,18 @@ class FocusedMenuDetails extends StatelessWidget {
                 },
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
-                      sigmaX: blurSize ?? 4, sigmaY: blurSize ?? 4),
+                    sigmaX: blurSize,
+                    sigmaY: blurSize,
+                  ),
                   child: Container(
-                    color:
-                        (blurBackgroundColor ?? Colors.black).withOpacity(0.7),
+                    color: blurBackgroundColor,
                   ),
                 )),
             Positioned(
               top: topOffset,
               left: leftOffset,
               child: TweenAnimationBuilder(
-                duration: Duration(milliseconds: 200),
+                duration: showItemsDuration,
                 builder: (BuildContext context, dynamic value, Widget? child) {
                   return Transform.scale(
                     scale: value,
@@ -104,8 +127,10 @@ class FocusedMenuDetails extends StatelessWidget {
                                 spreadRadius: 1)
                           ]),
                   child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                    child: ListView.builder(
+                    borderRadius: itemsCardBorderRadius,
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          itemSeperatorWidget ?? SizedBox.shrink(),
                       itemCount: menuItems.length,
                       padding: EdgeInsets.zero,
                       physics: enableMenuScroll
@@ -122,10 +147,9 @@ class FocusedMenuDetails extends StatelessWidget {
                                 alignment: Alignment.center,
                                 margin: const EdgeInsets.only(bottom: 1),
                                 color: item.backgroundColor ?? Colors.white,
-                                height: itemExtent ?? 50.0,
+                                height: itemExtent,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 14),
+                                  padding: itemPadding,
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -147,7 +171,8 @@ class FocusedMenuDetails extends StatelessWidget {
                                 );
                               },
                               tween: Tween(begin: 1.0, end: 0.0),
-                              duration: Duration(milliseconds: index * 200),
+                              duration: Duration(
+                                  milliseconds: index * itemAnimationDuration),
                               child: listItem);
                         } else {
                           return listItem;
@@ -166,8 +191,8 @@ class FocusedMenuDetails extends StatelessWidget {
                 child: AbsorbPointer(
                     absorbing: true,
                     child: Container(
-                        width: childSize!.width,
-                        height: childSize!.height,
+                        width: childSize.width,
+                        height: childSize.height,
                         child: child))),
           ],
         ),

@@ -55,6 +55,8 @@ class _Example1State extends State<Example1> {
                               color: Colors.grey,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15.0))),
+                          itemsCardBorderRadius:
+                              BorderRadius.all(Radius.circular(5)),
                           duration: Duration(milliseconds: 100),
                           animateMenuItems: true,
                           blurBackgroundColor: Colors.black54,
