@@ -106,14 +106,14 @@ class FocusedMenuHolder extends StatefulWidget {
     this.controller,
     this.onOpened,
     this.onClosed,
-    this.showItemsDuration = const Duration(milliseconds: 400),
+    this.showItemsDuration = const Duration(milliseconds: 100),
     this.itemsCardBorderRadius = const BorderRadius.all(Radius.zero),
     this.itemSeperatorWidget,
     this.itemPadding = const EdgeInsets.symmetric(
       vertical: 8.0,
       horizontal: 14,
     ),
-    this.itemAnimationDuration = 200,
+    this.itemAnimationDuration = 20,
   }) : super(key: key);
 
   @override
